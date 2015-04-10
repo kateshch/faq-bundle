@@ -1,0 +1,4 @@
+faq:
+    resource: "@FaqBundle/Controller"
+    type: annotation
+    prefix: /faq

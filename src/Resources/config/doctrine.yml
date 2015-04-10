@@ -1,0 +1,17 @@
+parameters:
+  faq.repo.question.class:
+    Kateshch\FaqBundle\Entity\FaqQuestionRepository
+  faq.repo.category.class:
+    Kateshch\FaqBundle\Entity\FaqCategoryRepository
+
+services:
+  faq.repo.question:
+    class:            %faq.repo.question.class%
+    factory_service:  doctrine.orm.entity_manager
+    factory_method:   getRepository
+    arguments: [FaqBundle:FaqQuestion]
+  faq.repo.category:
+    class:            %faq.repo.category.class%
+    factory_service:  doctrine.orm.entity_manager
+    factory_method:   getRepository
+    arguments: [FaqBundle:FaqCategory]
