@@ -4,7 +4,6 @@ namespace Kateshch\FaqBundle\Entity;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Model\Timestampable\Timestampable;
-use Symfony\Component\Validator\Constraints as Assert;
 use Werkint\Bundle\FrameworkExtraBundle\Model\Translatable;
 
 /**
@@ -34,13 +33,6 @@ class FaqAnswer
      * @var integer
      */
     protected $id;
-
-
-    /**
-     * @var FaqQuestion|null
-     * @ORM\OneToOne(targetEntity="Kateshch\FaqBundle\Entity\FaqQuestion", mappedBy="answer")
-     */
-    protected $question;
 
     /**
      * @return int

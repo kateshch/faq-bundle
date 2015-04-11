@@ -9,9 +9,9 @@ services:
     class:            %faq.repo.question.class%
     factory_service:  doctrine.orm.entity_manager
     factory_method:   getRepository
-    arguments: [FaqBundle:FaqQuestion]
+    arguments: [KateshchFaqBundle:FaqQuestion]
   faq.repo.category:
     class:            %faq.repo.category.class%
     factory_service:  doctrine.orm.entity_manager
     factory_method:   getRepository
-    arguments: [FaqBundle:FaqCategory]
+    arguments: [KateshchFaqBundle:FaqCategory]

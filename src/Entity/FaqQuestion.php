@@ -4,7 +4,6 @@ namespace Kateshch\FaqBundle\Entity;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Model\Timestampable\Timestampable;
-use Symfony\Component\Validator\Constraints as Assert;
 use Werkint\Bundle\FrameworkExtraBundle\Model\Translatable;
 
 /**
@@ -40,16 +39,21 @@ class FaqQuestion
 
     /**
      * @var FaqAnswer|null
-     *
-     * @ORM\OneToOne(targetEntity="Kateshch\FaqBundle\Entity\FaqAnswer", inversedBy="question")
-     * @ORM\JoinColumn(name="ref_answer", referencedColumnName="id")
+     * @ORM\OneToOne(targetEntity="Kateshch\FaqBundle\Entity\FaqAnswer", cascade={"persist","remove"})
+     * @ORM\JoinColumn(name="answer_id", referencedColumnName="id")
      */
     protected $answer;
 
     /**
+     * @ORM\Column(type="float", nullable=true)
+     * @var float
+     */
+    protected $mark;
+
+    /**
      * @var string
      *
-     * @ORM\Column(type="string",length=255)
+     * @ORM\Column(type="string",length=255,nullable=true)
      */
     protected $email;
 
@@ -133,5 +137,25 @@ class FaqQuestion
         $this->category = $category;
         return $this;
     }
+
+    /**
+     * @return int
+     */
+    public function getMark()
+    {
+        return $this->mark;
+    }
+
+    /**
+     * @param int $mark
+     * @return $this
+     */
+    public function setMark($mark)
+    {
+        $this->mark = $mark;
+        return $this;
+    }
+
+
 
 }

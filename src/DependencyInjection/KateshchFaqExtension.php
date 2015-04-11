@@ -14,7 +14,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
-class FaqExtension extends Extension
+class KateshchFaqExtension extends Extension
 {
     /**
      * {@inheritdoc}
@@ -23,6 +23,11 @@ class FaqExtension extends Extension
         array $configs,
         ContainerBuilder $container
     ) {
+        $configDir = realpath(__DIR__ . '/../Resources/config');
+        $container->setParameter(
+            $this->getAlias() . '.config_directory',
+            $configDir
+        );
         $processor = new Processor();
         $config = $processor->processConfiguration(
             $this->getConfiguration($configs, $container),
@@ -41,6 +46,7 @@ class FaqExtension extends Extension
         );
         $loader->load('services.yml');
         $loader->load('doctrine.yml');
+
     }
 
     /**

@@ -11,4 +11,6 @@ use Doctrine\ORM\EntityRepository;
  */
 class FaqCategoryRepository extends EntityRepository
 {
+
+
 }

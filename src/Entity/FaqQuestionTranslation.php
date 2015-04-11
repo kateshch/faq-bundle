@@ -5,7 +5,6 @@ namespace Kateshch\FaqBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\EntityRepository;
 use Knp\DoctrineBehaviors\Model as ORMBehaviors;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  *
@@ -14,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity()
  * @ORM\Table(name="app_faq_question_translations")
  */
-class FaqQuestionTranslation extends EntityRepository
+class FaqQuestionTranslation
 {
     use ORMBehaviors\Translatable\Translation;
 
@@ -29,7 +28,6 @@ class FaqQuestionTranslation extends EntityRepository
      * @var string
      *
      * @ORM\Column(type="text")
-     * @Assert\NotNull(message="PLease, write your question!")
      */
     protected $message;
 
@@ -69,6 +67,7 @@ class FaqQuestionTranslation extends EntityRepository
         $this->message = $message;
         return $this;
     }
+
 
 
 }

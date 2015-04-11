@@ -11,4 +11,12 @@ use Doctrine\ORM\EntityRepository;
  */
 class FaqQuestionRepository extends EntityRepository
 {
+
+    /**
+     *
+     */
+    public function findAllWithAnswer()
+    {
+        return $this->createQueryBuilder('q')->where('q.answer IS NOT NULL')->orderBy('q.mark', 'DESC')->getQuery()->getResult();
+    }
 }

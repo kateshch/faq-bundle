@@ -4,8 +4,9 @@ namespace Kateshch\FaqBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
-
+use Doctrine\ORM\Mapping\OrderBy;
 use Werkint\Bundle\FrameworkExtraBundle\Model\Translatable;
 
 /**
@@ -52,7 +53,7 @@ class FaqCategory
 
     /**
      * @var FaqQuestion[]|Collection
-     * @ORM\OneToMany(targetEntity="Kateshch\FaqBundle\Entity\FaqQuestion", mappedBy="category", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Kateshch\FaqBundle\Entity\FaqQuestion", mappedBy="category", cascade={"persist", "remove"})
      **/
     protected $questions;
 
@@ -97,7 +98,11 @@ class FaqCategory
      */
     public function getQuestions()
     {
-        return $this->questions;
+        $crt = Criteria::create();
+        /** @var Criteria $crt */
+        $crt->orderBy(['mark' => $crt::DESC]);
+        $questions = $this->questions;
+        return $questions->matching($crt);
     }
 
     /**

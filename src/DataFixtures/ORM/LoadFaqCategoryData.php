@@ -76,7 +76,7 @@ class LoadFaqCategoryData extends AbstractFixture implements
      */
     protected function getData()
     {
-        $path = $this->getContainer()->getParameter('sdelka_faq.config_directory');
+        $path = $this->getContainer()->getParameter('kateshch_faq.config_directory');
         $path .= '/data/faq-categories.yml';
 
         $data = Yaml::parse(file_get_contents($path));
