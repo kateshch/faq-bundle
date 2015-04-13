@@ -48,16 +48,29 @@ class FaqController
     // -- Action ---------------------------------------
     /**
      * @ApiDoc(
-     *   description="Список категорий"
+     *   description="Список категорий c вопросами"
      * )
-     * @Rest\Get("/list", name="faq_category_index",  defaults={"_format": "json"})
+     * @Rest\Get("/", name="faq_index",  defaults={"_format": "json"})
      * @Rest\View()
      */
-    public function listAction()
+    public function indexAction()
+    {
+        return [];
+    }
+
+
+    /**
+     * @Rest\Get("/category", name="faq_categories" ,defaults={"_format": "json"})
+     * @Rest\View()
+     */
+
+    public function listCategoryAction()
     {
         $categories = $this->repoFaqCategory->findAll();
-        return ['categories' => $categories];
+        return $categories;
     }
+
+
 
     /**
      * @ApiDoc(
@@ -66,7 +79,7 @@ class FaqController
      * @Rest\Get("/questions", name="faq_question_index", defaults={"_format": "json"})
      * @Rest\View()
      */
-    public function getQuestionsAction()
+    public function listQuestionsAction()
     {
         $categories = $this->repoFaqCategory->findAll();
         $questions = $this->repoFaqQuest->findAllWithAnswer();
@@ -91,9 +104,8 @@ class FaqController
      * @ParamConverter("faqQuestion", class="Kateshch\FaqBundle\Entity\FaqQuestion", converter="fos_rest.request_body")
      * @Rest\View()
      */
-    public function saveQuestionAction(FaqQuestion $faqQuestion, $category)
+    public function saveQuestionAction(FaqQuestion $faqQuestion,FaqCategory $category)
     {
-        $category = $this->repoFaqCategory->find($category);
         $faqQuestion->setCategory($category);
         $this->manager->persist($faqQuestion);
         $this->manager->flush();
@@ -107,9 +119,8 @@ class FaqController
      * @Rest\Put("/addmark/{question}/{mark}", name="faq_add_mark", defaults={"_format": "json"})
      * @Rest\View()
      */
-    public function addMarkAction($question, $mark)
+    public function addMarkAction(FaqQuestion $question, $mark)
     {
-        $question = $this->repoFaqQuest->find($question);
         $mark = $question->getMark() + $mark;
         $question->setMark($question->getMark() + $mark);
         $this->manager->persist($question);

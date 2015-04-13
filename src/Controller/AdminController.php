@@ -44,7 +44,19 @@ class AdminController
     // -- Action ---------------------------------------
 
     /**
-     * @Rest\Get("/category", name="faq_admin_category" ,defaults={"_format": "json"})
+     * @ApiDoc(
+     *   description="Главная админка"
+     * )
+     * @Rest\Get("", name="faq_admin_index")
+     * @Rest\View()
+     */
+    public function indexAction()
+    {
+        [];
+    }
+
+    /**
+     * @Rest\Get("/category", name="faq_admin_categories" ,defaults={"_format": "json"})
      * @Rest\View()
      */
 
@@ -82,9 +94,8 @@ class AdminController
      * @ParamConverter("faqAnswer", class="Kateshch\FaqBundle\Entity\FaqAnswer", converter="fos_rest.request_body")
      * @Rest\View()
      */
-    public function saveAnswerAction(FaqAnswer $faqAnswer, $question, Request $request)
+    public function saveAnswerAction(FaqAnswer $faqAnswer, FaqQuestion $question, Request $request)
     {
-        $question = $this->repoFaqQuest->find($question);
         $question->setAnswer($faqAnswer);
         $this->manager->persist($question);
         $this->manager->flush();
@@ -98,9 +109,8 @@ class AdminController
      * @Rest\Put("/answer/delete/{question}", name="faq_delete_answer", defaults={"_format": "json"})
      * @Rest\View()
      */
-    public function deleteAnswerAction($question, Request $request)
+    public function deleteAnswerAction(FaqQuestion $question, Request $request)
     {
-        $question = $this->repoFaqQuest->find($question);
         $answer = $question->getAnswer();
         $question->setAnswer(NULL);
         $this->manager->remove($answer);
@@ -139,10 +149,8 @@ class AdminController
      * @Rest\Get("/category/edit/{category}", name="faq_edit_category", defaults={"_format": "json"})
      * @Rest\View()
      */
-    public function getCategoryAction($category, Request $request)
+    public function getCategoryAction(FaqCategory $category, Request $request)
     {
-
-        $category = $this->repoFaqCategory->find($category);
         return $category;
     }
 
@@ -160,6 +168,7 @@ class AdminController
         $this->manager->flush();
         return $faqCategory;
     }
+
     /**
      * @ApiDoc(
      *   description="Удаление категории"
@@ -167,9 +176,8 @@ class AdminController
      * @Rest\Put("/category/delete/{category}", name="faq_delete_category", defaults={"_format": "json"})
      * @Rest\View()
      */
-    public function deleteCategoryAction($category, Request $request)
+    public function deleteCategoryAction(FaqCategory $category, Request $request)
     {
-        $category = $this->repoFaqCategory->find($category);
         $this->manager->remove($category);
         $this->manager->flush();
         return $category;
@@ -182,9 +190,9 @@ class AdminController
      * @Rest\Get("/question/edit/{question}", name="faq_edit_question", defaults={"_format": "json"})
      * @Rest\View()
      */
-    public function getQuestionAction($question, Request $request)
+    public function getQuestionAction(FaqQuestion $question,Request $request)
     {
-        return $this->repoFaqQuest->find($question);
+        return $question;
     }
 
     /**
@@ -192,12 +200,11 @@ class AdminController
      *   description="Редактирует вопрос"
      * )
      * @Rest\Put("/question/edit/{question}", name="faq_edit_question", defaults={"_format": "json"})
-     * @ParamConverter("faqQuestion", class="Kateshch\FaqBundle\Entity\FaqQuestion", converter="fos_rest.request_body")
+     * @ParamConverter("faqQuestion", class="Kateshch\FaqBundle\Entity\FaqQuestions", converter="fos_rest.request_body")
      * @Rest\View()
      */
     public function editQuestionAction(FaqQuestion $faqQuestion, Request $request)
     {
-
         $this->manager->persist($faqQuestion);
         $this->manager->flush();
         return $faqQuestion;

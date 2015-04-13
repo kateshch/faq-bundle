@@ -1,0 +1,25 @@
+{% for item in model %}
+  <div class="question open-close">
+    <div class="opener">Question:{{ item.message }}</div>
+    <div class="slide">
+      <div class="holder">
+        {% if item.answer %}
+          <p>Answer:  {{ item.answer.message }}</p>
+        {% else %}
+          <div class="faq-answer-form">
+            <div class="input-row">
+              <label>Message</label>
+              <div class="input-holder">
+                <div class="progress">0/1000</div>
+                <textarea cols="30" rows="10" name="message" placeholder="Type your message here"></textarea>
+              </div>
+            </div>
+            <div class="actions">
+              <button class="btn-small-green" data-question="{{ item.id }}">Ответить</button>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endfor %}

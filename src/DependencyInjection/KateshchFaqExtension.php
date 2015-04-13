@@ -6,6 +6,7 @@ use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Config\Resource\FileResource;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
@@ -14,8 +15,24 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
-class KateshchFaqExtension extends Extension
+class KateshchFaqExtension extends Extension implements
+    PrependExtensionInterface
 {
+
+    /**
+     * {@inheritdoc}
+     */
+    public function prepend(ContainerBuilder $container)
+    {
+        $baseDir = realpath(__DIR__ . '/../Resources/scripts/jsmodel');
+
+        $container->prependExtensionConfig(
+            'werkint_require_js', [
+                'base_dir' => $baseDir,
+            ]
+        );
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -24,20 +41,28 @@ class KateshchFaqExtension extends Extension
         ContainerBuilder $container
     ) {
         $configDir = realpath(__DIR__ . '/../Resources/config');
-        $container->setParameter(
-            $this->getAlias() . '.config_directory',
-            $configDir
-        );
+
         $processor = new Processor();
         $config = $processor->processConfiguration(
-            $this->getConfiguration($configs, $container),
+            new Configuration($this->getAlias()),
             $configs
         );
-        $config['scriptsdir'] = __DIR__ . '/../Resources/scripts';
 
         $container->setParameter(
             $this->getAlias(),
             $config
+        );
+
+        $config['scriptsdir'] = __DIR__ . '/../Resources/scripts';
+
+        $container->setParameter(
+            $this->getAlias() . '.config_directory',
+            $configDir
+        );
+
+        $container->setParameter(
+            $this->getAlias() . '.jsmodeldir',
+            realpath(__DIR__ . '/../Resources/scripts/jsmodel')
         );
 
         $loader = new YamlFileLoader(

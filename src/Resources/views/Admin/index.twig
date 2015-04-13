@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  {{ require_js_initialize() }}
+  <script type="application/javascript">
+    {% include '@KateshchFaq/Admin/index.js' %}
+    </script>
+</head>
+
+<body>
+
+{#{% if categories|length > 0 %}#}
+
+    {#{% for category in categories %}#}
+      {#<li>#}
+        {#<a href="#">{{ category.title }}</a>#}
+      {#</li>#}
+    {#{% endfor %}#}
+
+{#{% endif %}#}
+
+
+  {#<div class="tab-content">#}
+    {#{% for category in categories %}#}
+      {#<div>#}
+        {#{% if category.questions|length > 0 %}#}
+          {#{% for item in category.questions %}#}
+              {#<div class="question open-close">#}
+                 {#<div class="opener">Question:{{ item.message }}</div>#}
+                {#<div class="slide">#}
+                  {#<div class="holder">#}
+                  {#{% if item.answer %}#}
+                    {#<p>Answer:  {{ item.answer.message }}</p>#}
+                  {#{% else %}#}
+                    {#<div class="faq-answer-form">#}
+                      {#<div class="input-row">#}
+                        {#<label>Message</label>#}
+                        {#<div class="input-holder">#}
+                          {#<div class="progress">0/1000</div>#}
+                          {#<textarea cols="30" rows="10" name="message" placeholder="Type your message here"></textarea>#}
+                        {#</div>#}
+                      {#</div>#}
+                      {#<div class="actions">#}
+                        {#<button class="btn-small-green" data-question="{{ item.id }}">Ответить</button>#}
+                      {#</div>#}
+                    {#</div>#}
+                  {#{% endif %}#}
+                  {#</div>#}
+                {#</div>#}
+              {#</div>#}
+          {#{% endfor %}#}
+        {#{% endif %}#}
+      {#</div>#}
+    {#{% endfor %}#}
+  {#</div>#}
+{#{% endif %}#}
+
+{% twigjs '@KateshchFaq/Widgets/listQuestions.twig' %}
+
+<div class="question-list"></div>
+</body>
+</html>
