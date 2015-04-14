@@ -5,6 +5,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Model\Timestampable\Timestampable;
 use Werkint\Bundle\FrameworkExtraBundle\Model\Translatable;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * TODO: write "FaqMessage" info
@@ -26,19 +27,46 @@ class FaqQuestion
     use Timestampable;
     use Translatable;
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->setAnswer(new FaqAnswer());
+        $this->setCategory(new FaqCategory());
+    }
 
+    /**
+     * @Serializer\Type("array< Kateshch\FaqBundle\Entity\FaqQuestionTranslation>")
+     * @Serializer\Accessor(getter="getATranslations", setter="setATranslations")
+     */
     protected $translations;
+
+    /**
+     * @Serializer\Accessor(getter="getName")
+     * @Serializer\Type("string")
+     */
+    private $name;
+
+    /**
+     * @Serializer\Accessor(getter="getMessage")
+     * @Serializer\Type("string")
+     */
+    private $message;
+
 
     /**
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Serializer\Type("integer")
      * @var integer
      */
     protected $id;
 
     /**
      * @var FaqAnswer|null
+     * @Serializer\Type("Kateshch\FaqBundle\Entity\FaqAnswer")
      * @ORM\OneToOne(targetEntity="Kateshch\FaqBundle\Entity\FaqAnswer", cascade={"persist","remove"})
      * @ORM\JoinColumn(name="answer_id", referencedColumnName="id")
      */
@@ -46,20 +74,21 @@ class FaqQuestion
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * @Serializer\Type("float")
      * @var float
      */
     protected $mark;
 
     /**
      * @var string
-     *
+     * @Serializer\Type("string")
      * @ORM\Column(type="string",length=255,nullable=true)
      */
     protected $email;
 
     /**
      * @var FaqCategory|null
-     *
+     * @Serializer\Type("Kateshch\FaqBundle\Entity\FaqCategory")
      * @ORM\ManyToOne(targetEntity="Kateshch\FaqBundle\Entity\FaqCategory")
      * @ORM\JoinColumn(name="ref_category", referencedColumnName="id")
      */

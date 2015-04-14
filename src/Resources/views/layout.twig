@@ -1,0 +1,78 @@
+{# @formatter:off #}{% spaceless %}
+{% block globalhook_break__root %}
+<!DOCTYPE html>
+<html {% block html_attributes %}class="no-js"{% endblock %}>
+<head>
+  {% spaceless %}
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+    {% block baseHead %}
+      <title>
+        {% spaceless %}
+          {% block titleBase %}
+            {% spaceless %}
+            {% block title %} FAQ{% endblock %}
+          {% endspaceless %}
+          {% endblock %}
+        {% endspaceless %}
+      </title>
+
+      {% block baseIcon %}
+
+      {% endblock %}
+
+      {% block baseScripts %}
+        {{ require_js_initialize() }}
+        <script type="text/javascript" src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+        <script type="text/javascript"
+            src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
+        <script src="{{ asset('bundles/bazingajstranslation/js/translator.min.js') }}"></script>
+       <script src="{{ path('bazinga_jstranslation_js', {'domain': 'SdelkaAppBundle', 'locales': 'en, '~app.request.locale}) }}"></script>
+      <script src="{{ asset('bundles/kateshchfaq/inspinia/bootstrap.min.js') }}"></script>
+      {% endblock %}
+
+      {% block baseStyles %}
+       <link href="{{ asset('bundles/kateshchfaq/inspinia/css/bootstrap.min.css') }}" rel="stylesheet">
+       <link href="{{ asset('bundles/kateshchfaq/inspinia/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
+       <link href="{{ asset('bundles/kateshchfaq/inspinia/css/animate.css') }}" rel="stylesheet">
+       <link href="{{ asset('bundles/kateshchfaq/inspinia/css/style.css') }}" rel="stylesheet">
+      {% endblock %}
+
+    {% endblock %}
+  {% endspaceless %}
+</head>
+<body style="overflow: visible !important;">
+ <div id="wrapper">
+    <nav class="navbar-default navbar-static-side" role="navigation">
+      <div class="sidebar-collapse">
+        <ul class="nav" id="side-menu">
+          <li class="question tab">
+            <a href="#"><span class="nav-label">Questions</span></a>
+          </li>
+            <li class="question tab">
+            <a href="#"><span class="nav-label">Categories</span></a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <div id="page-wrapper" class="gray-bg">
+      <div id="page_content">
+        {% block page %}{% endblock %}
+      </div>
+      <div class="footer">
+        <div>
+          <strong>Copyright</strong>&copy; 2014-{{ 'now'|date('Y') }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<div class="templates" id="global_page_templates" style="display: none">
+  {% twigjsresult %}
+</div>
+</body>
+</html>
+{% endblock %}
+{% endspaceless %}

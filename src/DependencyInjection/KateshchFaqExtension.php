@@ -15,24 +15,8 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
-class KateshchFaqExtension extends Extension implements
-    PrependExtensionInterface
+class KateshchFaqExtension extends Extension
 {
-
-    /**
-     * {@inheritdoc}
-     */
-    public function prepend(ContainerBuilder $container)
-    {
-        $baseDir = realpath(__DIR__ . '/../Resources/scripts/jsmodel');
-
-        $container->prependExtensionConfig(
-            'werkint_require_js', [
-                'base_dir' => $baseDir,
-            ]
-        );
-    }
-
     /**
      * {@inheritdoc}
      */

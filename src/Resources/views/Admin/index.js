@@ -1,12 +1,11 @@
 requirejs([
     'jquery',
     'lodash',
-    'backbone',
-    'routing',
-    'templating',
     'kateshch-faq/listQuestionView',
+    'kateshch-faq/listCategoriesView',
+    'templating',
     'domReady!',
-], function ($, _, ListQuestionView ) {
+], function ($, _, ListQuestionView, ListCategoriesView, templating ) {
     'use strict';
 
 
@@ -18,5 +17,16 @@ requirejs([
     });
 
     view.render();
+
+
+    var conta = $('.category-list');
+
+
+    var viewCa = new ListCategoriesView({
+        "el":    conta,
+    });
+
+    viewCa.render();
+
 
 });

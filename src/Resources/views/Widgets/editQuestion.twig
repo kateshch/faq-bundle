@@ -1,0 +1,33 @@
+<div class="edit-question-form form-inline">
+
+  <div class="form-group"><label class="col-sm-2 control-label">Question</label>
+    <div class="col-sm-10">
+      <textarea cols="20" rows="3" name="translations[0].message" placeholder="Type question here"></textarea></div>
+  </div>
+  <div class="form-group"><label class="col-sm-2 control-label">Answer</label>
+    <div class="col-sm-10">
+      <textarea cols="20" rows="3" name="answer.translations[0].message" placeholder="Type your answer here"></textarea>
+    </div>
+  </div>
+  {#<label>Question</label>#}
+  {#<textarea cols="30" rows="10" name="translations[0].message" placeholder="Type your message here"></textarea>#}
+
+  {#<label>Answer</label>#}
+  {#<textarea cols="30" rows="10" name="answer.translations[0].message" placeholder="Type your message here"></textarea>#}
+
+  <div class="form-group"><label class="col-sm-2 control-label">Category</label>
+
+    <div class="col-sm-10"><select class="form-control m-b" name="category">
+        {% for type in categories.toArray %}
+          <option value="{{ type.id }}">{{ type.title }}</option>
+        {% endfor %}
+      </select>
+
+    </div>
+  </div>
+  <div class="col-sm-4 col-sm-offset-2">
+    <button class="btn btn-white" type="submit">Cancel</button>
+    <button type="submit" class="btn btn-primary save-question">Save</button>
+  </div>
+
+</div>

@@ -119,7 +119,7 @@ class AdminController
     }
 
     /**
-     * @Rest\Get("/category/new", name="faq_category_new", defaults={"_format": "json"})
+     * @Rest\Get("/api/category", name="faq_category_api", defaults={"_format": "json"})
      * @Rest\View()
      */
     public function newCategoryAction()
@@ -131,7 +131,7 @@ class AdminController
      * @ApiDoc(
      *   description="Добавление категории"
      * )
-     * @Rest\Post("/category/new", defaults={"_format": "json"})
+     * @Rest\Post("/api/category", defaults={"_format": "json"})
      * @ParamConverter("faqCategory", class="Kateshch\FaqBundle\Entity\FaqCategory", converter="fos_rest.request_body")
      * @Rest\View()
      */
@@ -146,7 +146,7 @@ class AdminController
      * @ApiDoc(
      *   description="Получение кактегории"
      * )
-     * @Rest\Get("/category/edit/{category}", name="faq_edit_category", defaults={"_format": "json"})
+     * @Rest\Get("/api/category/{category}", defaults={"_format": "json"})
      * @Rest\View()
      */
     public function getCategoryAction(FaqCategory $category, Request $request)
@@ -158,7 +158,7 @@ class AdminController
      * @ApiDoc(
      *   description="Редактирование категории"
      * )
-     * @Rest\Put("/category/edit/{category}", defaults={"_format": "json"})
+     * @Rest\Put("/api/category/{category}", defaults={"_format": "json"})
      * @ParamConverter("faqCategory", class="Kateshch\FaqBundle\Entity\FaqCategory", converter="fos_rest.request_body")
      * @Rest\View()
      */
@@ -173,7 +173,7 @@ class AdminController
      * @ApiDoc(
      *   description="Удаление категории"
      * )
-     * @Rest\Put("/category/delete/{category}", name="faq_delete_category", defaults={"_format": "json"})
+     * @Rest\Put("/api/category/delete/{category}", name="faq_delete_category", defaults={"_format": "json"})
      * @Rest\View()
      */
     public function deleteCategoryAction(FaqCategory $category, Request $request)
@@ -184,10 +184,19 @@ class AdminController
     }
 
     /**
+     * @Rest\Get("/api/question", name="faq_question_api", defaults={"_format": "json"})
+     * @Rest\View()
+     */
+    public function newQuestionAction()
+    {
+        return new FaqQuestion();
+    }
+
+    /**
      * @ApiDoc(
      *   description="Редактирует вопрос"
      * )
-     * @Rest\Get("/question/edit/{question}", name="faq_edit_question", defaults={"_format": "json"})
+     * @Rest\Get("/api/question/{question}", defaults={"_format": "json"})
      * @Rest\View()
      */
     public function getQuestionAction(FaqQuestion $question,Request $request)
@@ -199,8 +208,8 @@ class AdminController
      * @ApiDoc(
      *   description="Редактирует вопрос"
      * )
-     * @Rest\Put("/question/edit/{question}", name="faq_edit_question", defaults={"_format": "json"})
-     * @ParamConverter("faqQuestion", class="Kateshch\FaqBundle\Entity\FaqQuestions", converter="fos_rest.request_body")
+     * @Rest\Put("/api/question/{question}", defaults={"_format": "json"})
+     * @ParamConverter("faqQuestion", class="Kateshch\FaqBundle\Entity\FaqQuestion", converter="fos_rest.request_body")
      * @Rest\View()
      */
     public function editQuestionAction(FaqQuestion $faqQuestion, Request $request)
@@ -208,6 +217,35 @@ class AdminController
         $this->manager->persist($faqQuestion);
         $this->manager->flush();
         return $faqQuestion;
+    }
+
+    /**
+     * @ApiDoc(
+     *   description="Новый вопрос"
+     * )
+     * @Rest\Post("/api/question", defaults={"_format": "json"})
+     * @ParamConverter("faqQuestion", class="Kateshch\FaqBundle\Entity\FaqQuestion", converter="fos_rest.request_body")
+     * @Rest\View()
+     */
+    public function saveQuestionAction(FaqQuestion $faqQuestion, Request $request)
+    {
+        $this->manager->persist($faqQuestion);
+        $this->manager->flush();
+        return $faqQuestion;
+    }
+
+    /**
+     * @ApiDoc(
+     *   description="Удаление вопроса"
+     * )
+     * @Rest\Put("/api/question/delete/{question}", name="faq_question_delete", defaults={"_format": "json"})
+     * @Rest\View()
+     */
+    public function deleteQuestionAction(FaqQuestion $question, Request $request)
+    {
+        $this->manager->remove($question);
+        $this->manager->flush();
+        return $question;
     }
 
 }

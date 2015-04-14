@@ -1,0 +1,14 @@
+{% for i,item in model.toArray() %}
+  <div class="question open-close">
+    <div class="opener">Category:{{ item.title }} </div>
+  </div>
+  <a href="" class="edit" data-ordinal="{{ i }}">Edit category</a>
+  <a href="" class="remove" data-id="{{ item.id}}">Remove category</a>
+{% endfor %}
+<div>
+  <a href="" class="add">Add Category</a>
+</div>
+
+<div class="new-category"></div>
+
+

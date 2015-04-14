@@ -1,13 +1,13 @@
 <?php
 namespace Kateshch\FaqBundle\Entity;
 
-
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\OrderBy;
 use Werkint\Bundle\FrameworkExtraBundle\Model\Translatable;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * TODO: write "FaqCategory" info
@@ -25,15 +25,21 @@ class FaqCategory
 {
     use Translatable;
 
+
+
     /**
-     *
+     * @Serializer\Type("array< Kateshch\FaqBundle\Entity\FaqCategoryTranslation>")
+     * @Serializer\Accessor(getter="getATranslations", setter="setATranslations")
      */
-    public function __construct()
-    {
-        $this->questions = new ArrayCollection();
-    }
 
     protected $translations;
+
+    /**
+     * @Serializer\Accessor(getter="getTitle")
+     * @Serializer\Type("string")
+     */
+    private $title;
+
 
     /**
      * @var integer
@@ -45,14 +51,14 @@ class FaqCategory
     protected $id;
 
     /**
-     * @ORM\Column(type="string",length=100, unique=true)
-     *
+     * @ORM\Column(type="string",length=100, unique=true, nullable=true)
      * @var string
      */
     protected $class;
 
     /**
      * @var FaqQuestion[]|Collection
+     * @Serializer\Exclude
      * @ORM\OneToMany(targetEntity="Kateshch\FaqBundle\Entity\FaqQuestion", mappedBy="category", cascade={"persist", "remove"})
      **/
     protected $questions;

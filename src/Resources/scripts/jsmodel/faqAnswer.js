@@ -1,14 +1,26 @@
 define([
     'backbone',
-    'routing'
-], function (Backbone) {
+    '../util/basemodel',
+    './translation',
+    './translationCollection',
+    'routing',
+], function (Backbone, BaseModel,TrModel,TrCollection) {
     'use strict';
 
-
-    var Model = Backbone.Model.extend({
-        "defaults": {
-            "translation":     [],
+    
+    var Model = BaseModel.extend({
+        "defaults":  {
+            "translations": new TrCollection(),
         },
+
+        "relations": [
+            {
+                "type":           Backbone.HasMany,
+                "key":            'translations',
+                "relatedModel":   TrModel,
+                "collectionType": TrCollection
+            }
+        ],
     });
 
     return Model;

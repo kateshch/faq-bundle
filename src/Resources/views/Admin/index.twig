@@ -1,62 +1,36 @@
-<!DOCTYPE html>
-<html>
-<head>
-  {{ require_js_initialize() }}
+{% extends '@KateshchFaq/layout.twig' %}
+
+{% block baseScripts %}
+  {{ parent() }}
   <script type="application/javascript">
     {% include '@KateshchFaq/Admin/index.js' %}
-    </script>
-</head>
-
-<body>
-
-{#{% if categories|length > 0 %}#}
-
-    {#{% for category in categories %}#}
-      {#<li>#}
-        {#<a href="#">{{ category.title }}</a>#}
-      {#</li>#}
-    {#{% endfor %}#}
-
-{#{% endif %}#}
+  </script>
+{% endblock %}
 
 
-  {#<div class="tab-content">#}
-    {#{% for category in categories %}#}
-      {#<div>#}
-        {#{% if category.questions|length > 0 %}#}
-          {#{% for item in category.questions %}#}
-              {#<div class="question open-close">#}
-                 {#<div class="opener">Question:{{ item.message }}</div>#}
-                {#<div class="slide">#}
-                  {#<div class="holder">#}
-                  {#{% if item.answer %}#}
-                    {#<p>Answer:  {{ item.answer.message }}</p>#}
-                  {#{% else %}#}
-                    {#<div class="faq-answer-form">#}
-                      {#<div class="input-row">#}
-                        {#<label>Message</label>#}
-                        {#<div class="input-holder">#}
-                          {#<div class="progress">0/1000</div>#}
-                          {#<textarea cols="30" rows="10" name="message" placeholder="Type your message here"></textarea>#}
-                        {#</div>#}
-                      {#</div>#}
-                      {#<div class="actions">#}
-                        {#<button class="btn-small-green" data-question="{{ item.id }}">Ответить</button>#}
-                      {#</div>#}
-                    {#</div>#}
-                  {#{% endif %}#}
-                  {#</div>#}
-                {#</div>#}
-              {#</div>#}
-          {#{% endfor %}#}
-        {#{% endif %}#}
-      {#</div>#}
-    {#{% endfor %}#}
-  {#</div>#}
-{#{% endif %}#}
 
 {% twigjs '@KateshchFaq/Widgets/listQuestions.twig' %}
+{% twigjs '@KateshchFaq/Widgets/editQuestion.twig' %}
 
-<div class="question-list"></div>
-</body>
-</html>
+{% twigjs '@KateshchFaq/Widgets/listCategories.twig' %}
+{% twigjs '@KateshchFaq/Widgets/editCategory.twig' %}
+
+{% block page %}
+
+    <div class="row border-bottom">
+      <nav class="navbar navbar-static-top  " role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header">
+          <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+          <form role="search" class="navbar-form-custom" method="post" action="search_results.html">
+            <div class="form-group">
+              <input type="text" placeholder="Search for something..." class="form-control" name="top-search" id="top-search">
+            </div>
+          </form>
+        </div>
+
+      </nav>
+    </div>
+  <div class = "question-list">
+
+  </div>
+{% endblock %}

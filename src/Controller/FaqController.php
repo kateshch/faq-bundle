@@ -10,6 +10,8 @@ use Kateshch\FaqBundle\Entity\FaqQuestion;
 use Kateshch\FaqBundle\Entity\FaqQuestionRepository;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\BrowserKit\Response;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 
@@ -25,6 +27,12 @@ class FaqController
      * @var EntityManagerInterface
      */
     private $manager;
+
+    /**
+     * @DI\Inject("service_container")
+     * @var ContainerInterface;
+     */
+    private $container;
 
     /**
      * @DI\Inject("faq.repo.category")
@@ -86,14 +94,7 @@ class FaqController
         return ['categories' => $categories, 'questions' => $questions];
     }
 
-    /**
-     * @Rest\Get("/question/new/{category}", name="faq_question_new", defaults={"_format": "json"})
-     * @Rest\View()
-     */
-    public function newQuestionAction()
-    {
-        return new FaqQuestion();
-    }
+
 
     /**
      * @ApiDoc(
@@ -122,8 +123,7 @@ class FaqController
     public function addMarkAction(FaqQuestion $question, $mark)
     {
         $mark = $question->getMark() + $mark;
-        $question->setMark($question->getMark() + $mark);
-        $this->manager->persist($question);
+        $question->setMark($mark);
         $this->manager->flush();
         return $question;
     }

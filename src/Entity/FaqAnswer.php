@@ -6,6 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Model\Timestampable\Timestampable;
 use Werkint\Bundle\FrameworkExtraBundle\Model\Translatable;
 
+use JMS\Serializer\Annotation as Serializer;
+
 /**
  * TODO: write "FaqMessage" info
  *
@@ -24,7 +26,21 @@ class FaqAnswer
     use Timestampable;
     use Translatable;
 
+
+
+    /**
+     * @Serializer\Type("array< Kateshch\FaqBundle\Entity\FaqAnswerTranslation>")
+     * @Serializer\Accessor(getter="getATranslations", setter="setATranslations")
+     */
     protected $translations;
+
+    /**
+     * @Serializer\Accessor(getter="getMessage")
+     * @Serializer\Type("string")
+     */
+    private $message;
+
+
 
     /**
      * @ORM\Column(name="id", type="integer")
