@@ -43,6 +43,8 @@ class AdminController extends Controller
      */
     private $repoFaqCategory;
 
+
+
     // -- Action ---------------------------------------
     /**
      * @ApiDoc(
@@ -218,7 +220,8 @@ class AdminController extends Controller
         if ($faqQuestion->getAnswer()->getId() && $faqQuestion->getEmail()) {
             $content = $this->render('KateshchFaqBundle::email.twig', ['answer' => $faqQuestion->getAnswer()->getMessage(), 'question' => $faqQuestion->getMessage()]);
             $message = \Swift_Message::newInstance()->setTo($faqQuestion->getEmail())->setBody($content, 'text/html');
-            $result = $message->send($message);
+            $mailer = $this->get('mailer');
+            $result = $mailer->send($message);
 
         }
         return $faqQuestion;
