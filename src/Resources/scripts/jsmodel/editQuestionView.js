@@ -28,6 +28,7 @@ define([
         "saveQuestion": function (e) {
             e.preventDefault();
             this.model.save();
+            this.trigger('newModel');
         },
 
         render: function () {

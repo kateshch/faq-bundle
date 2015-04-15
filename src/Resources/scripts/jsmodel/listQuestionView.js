@@ -19,18 +19,20 @@ define([
             var collection = new FaqQuestionCollection();
             collection.fetch();
             this.model = collection;
+
             this.model.on('sync', this.render, this);
         },
 
         "events": {
             "click .add-question": 'newQuest',
-            "click .edit": 'editQuest',
-            "click .remove": 'removeQuest'
+            "click .edit-question": 'editQuest',
+            "click .remove-question": 'removeQuest'
         },
 
         "newQuest": function (e) {
             e.preventDefault();
-            var model = new FaqQuestion();
+            var model = new FaqQuestion(),
+                that = this;
             model.fetch({
                 success: function () {
                     this.newQuestionView = new EditQuestionView(
@@ -39,6 +41,9 @@ define([
                             el:    this.$el.find('.new-question')
                         });
                     this.newQuestionView.render();
+                    this.newQuestionView.on('newModel', function(){
+                        this.model.fetch();
+                    }, this);
                 }.bind(this)
             });
 
@@ -49,12 +54,12 @@ define([
             var obj = this.$(e.currentTarget),
                 index = obj.data('ordinal');
             var model = this.model.at(index);
-            this.editQuestionView = new EditQuestionView(
+            this.editQuestionView[index] = new EditQuestionView(
                 {
                     model: model,
                     el:    this.$el.find('.edit-question-'+index)
                 });
-            this.editQuestionView.render();
+            this.editQuestionView[index].render();
 
         },
 
@@ -74,12 +79,10 @@ define([
 
 
         render: function () {
-            if (this.model) {
                 this.$el.html(this.template({
                     model: this.model
                 }));
             }
-        },
     });
 
     return View;

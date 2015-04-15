@@ -1,32 +1,57 @@
 requirejs([
     'jquery',
     'lodash',
+    'backbone',
+    'routing',
     'kateshch-faq/listQuestionView',
     'kateshch-faq/listCategoriesView',
     'templating',
     'domReady!',
-], function ($, _, ListQuestionView, ListCategoriesView, templating ) {
+], function ($, _, Backbone,Routing, ListQuestionView, ListCategoriesView, templating ) {
     'use strict';
 
 
-    var cont = $('.question-list');
+    var cont = $('.content');
 
+    var View = Backbone.View.extend({
+        el: $('#wrapper'),
+        "currentTab": "questions",
 
-    var view = new ListQuestionView({
-        "el":    cont,
+        "initialize": function(){
+            this.views = {
+                "questions":  new ListQuestionView(),
+                "categories": new ListCategoriesView(),
+            };
+        },
+
+        "events": {
+            "click .questionstab": function(e){
+                e.preventDefault();
+                this.currentTab = "questions";
+
+                this.render();
+            },
+            "click .categoriestab": function(e){
+                e.preventDefault();
+                this.currentTab = "categories";
+                this.render();
+            },
+        },
+
+        render: function () {
+            window.history.pushState(false,"", Routing.generate('faq_admin_index', {'tab': this.currentTab}));
+            var view = this.views[this.currentTab];
+            view.setElement(cont);
+            view.render();
+            return this;
+        },
     });
 
-    view.render();
+    var view = new View();
+    console.log();
 
 
-    var conta = $('.category-list');
 
-
-    var viewCa = new ListCategoriesView({
-        "el":    conta,
-    });
-
-    viewCa.render();
 
 
 });

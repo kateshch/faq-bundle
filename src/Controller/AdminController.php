@@ -11,8 +11,10 @@ use JMS\DiExtraBundle\Annotation as DI;
 use Kateshch\FaqBundle\Entity\FaqQuestion;
 use Kateshch\FaqBundle\Entity\FaqQuestionRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
+use Werkint\Bundle\FrameworkExtraBundle\Service\Mailer\Mailer;
 
 /**
  * TODO: write "AdminController" info
@@ -21,7 +23,7 @@ use Symfony\Component\Validator\ConstraintViolationListInterface;
  *
  * @Rest\Route("/edit")
  */
-class AdminController
+class AdminController extends Controller
 {
     /**
      * @DI\Inject("doctrine.orm.entity_manager")
@@ -42,7 +44,6 @@ class AdminController
     private $repoFaqCategory;
 
     // -- Action ---------------------------------------
-
     /**
      * @ApiDoc(
      *   description="Главная админка"
@@ -59,7 +60,6 @@ class AdminController
      * @Rest\Get("/category", name="faq_admin_categories" ,defaults={"_format": "json"})
      * @Rest\View()
      */
-
     public function listCategoryAction()
     {
         $categories = $this->repoFaqCategory->findAll();
@@ -70,7 +70,6 @@ class AdminController
      * @Rest\Get("/questions", name="faq_admin_questions",defaults={"_format": "json"})
      * @Rest\View()
      */
-
     public function listQuestionsAction()
     {
         $questions = $this->repoFaqQuest->findAll();
@@ -112,7 +111,7 @@ class AdminController
     public function deleteAnswerAction(FaqQuestion $question, Request $request)
     {
         $answer = $question->getAnswer();
-        $question->setAnswer(NULL);
+        $question->setAnswer(null);
         $this->manager->remove($answer);
         $this->manager->flush();
         return $question;
@@ -199,7 +198,7 @@ class AdminController
      * @Rest\Get("/api/question/{question}", defaults={"_format": "json"})
      * @Rest\View()
      */
-    public function getQuestionAction(FaqQuestion $question,Request $request)
+    public function getQuestionAction(FaqQuestion $question, Request $request)
     {
         return $question;
     }
@@ -216,6 +215,12 @@ class AdminController
     {
         $this->manager->persist($faqQuestion);
         $this->manager->flush();
+        if ($faqQuestion->getAnswer()->getId() && $faqQuestion->getEmail()) {
+            $content = $this->render('KateshchFaqBundle::email.twig', ['answer' => $faqQuestion->getAnswer()->getMessage(), 'question' => $faqQuestion->getMessage()]);
+            $message = \Swift_Message::newInstance()->setTo($faqQuestion->getEmail())->setBody($content, 'text/html');
+            $result = $message->send($message);
+
+        }
         return $faqQuestion;
     }
 

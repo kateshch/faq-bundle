@@ -23,9 +23,9 @@ define([
         },
 
         "events": {
-            "click .add": 'newQuest',
-            "click .edit": 'editQuest',
-            "click .remove": 'removeQuest'
+            "click .add-category": 'newQuest',
+            "click .edit-category": 'editQuest',
+            "click .remove-category": 'removeQuest'
         },
 
         "newQuest": function (e) {
@@ -33,12 +33,15 @@ define([
             var model = new FaqCategory();
             model.fetch({
                 success: function () {
-                    this.newQuestionView = new EditCategoryView(
+                    this.newCategoryView = new EditCategoryView(
                         {
                             model: new FaqCategory(),
                             el:    this.$el.find('.new-category')
                         });
-                    this.newQuestionView.render();
+                    this.newCategoryView.render();
+                    this.newCategoryView.on('newModel', function(){
+                        this.model.fetch();
+                    }, this);
                 }.bind(this)
             });
 
@@ -46,15 +49,16 @@ define([
 
         "editQuest": function (e) {
             e.preventDefault();
+
             var obj = this.$(e.currentTarget),
                 index = obj.data('ordinal');
             var model = this.model.at(index);
-            this.editQuestionView = new EditCategoryView(
+            this.editCategoryView = new EditCategoryView(
                 {
                     model: model,
-                    el:    this.$el.find('.new-category')
+                    el:    this.$el.find('.edit-category-'+index)
                 });
-            this.editQuestionView.render();
+            this.editCategoryView.render();
 
         },
 
