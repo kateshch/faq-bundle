@@ -1,15 +1,9 @@
 - class: "classified-ads"
   titles:
-    ru: "Доска обявление"
     en: "Classifieds"
-    es: "Clasificados"
 - class: "qual-services"
   titles:
-    ru: "Качественные услуги"
     en: "Qual Services"
-    es: "Servicios Qual"
 - class: "trusty-advices"
   titles:
-    ru: "Платные советы"
     en: "Trusty Advices"
-    es: "Consejos trusty"
