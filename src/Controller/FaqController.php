@@ -58,10 +58,10 @@ class FaqController
      * @ApiDoc(
      *   description="Список категорий c вопросами"
      * )
-     * @Rest\Get("/", name="faq_index",  defaults={"_format": "json"})
+     * @Rest\Get("/", name="faq_index")
      * @Rest\View()
      */
-    public function indexAction()
+    public function listAction()
     {
         return [];
     }
@@ -84,7 +84,7 @@ class FaqController
      * @ApiDoc(
      *   description="Список вопросов с ответами"
      * )
-     * @Rest\Get("/questions", name="faq_question_index", defaults={"_format": "json"})
+     * @Rest\Get("/questions", name="faq_questions", defaults={"_format": "json"})
      * @Rest\View()
      */
     public function listQuestionsAction()
@@ -101,13 +101,12 @@ class FaqController
      *   description="Добавляет вопрос",
      *   input="\Kateshch\FaqBundle\Entity\FaqQuestion"
      * )
-     * @Rest\Post("/question/new/{category}",  defaults={"_format": "json"})
+     * @Rest\Post("/question/new", name="faq_new_question", defaults={"_format": "json"})
      * @ParamConverter("faqQuestion", class="Kateshch\FaqBundle\Entity\FaqQuestion", converter="fos_rest.request_body")
      * @Rest\View()
      */
-    public function saveQuestionAction(FaqQuestion $faqQuestion,FaqCategory $category)
+    public function saveQuestionAction(FaqQuestion $faqQuestion)
     {
-        $faqQuestion->setCategory($category);
         $this->manager->persist($faqQuestion);
         $this->manager->flush();
         return $faqQuestion;

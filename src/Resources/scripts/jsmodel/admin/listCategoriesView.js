@@ -10,7 +10,7 @@ define([
 ], function ($, _, Backbone, templating,Routing, FaqCategoriesCollection,EditCategoryView, FaqCategory) {
     'use strict';
 
-    var viewId = '@KateshchFaq/Widgets/listCategories.twig';
+    var viewId = '@KateshchFaq/Widgets/Admin/listCategories.twig';
 
     var View = Backbone.View.extend({
         template: templating.get(viewId),

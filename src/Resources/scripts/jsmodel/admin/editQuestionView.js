@@ -8,7 +8,7 @@ define([
 ], function ($, _, Backbone, templating, FaqCategoryCollection) {
     'use strict';
 
-    var viewId = '@KateshchFaq/Widgets/editQuestion.twig';
+    var viewId = '@KateshchFaq/Widgets/Admin/editQuestion.twig';
 
     var View = Backbone.View.extend({
         "template": templating.get(viewId),

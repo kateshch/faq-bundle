@@ -1,10 +1,12 @@
 define([
     'backbone',
-    '../util/basemodel',
-    './translation',
-    './translationCollection',
+    '../../util/basemodel',
+    '../translation/translation',
+    '../translation/translationCollection',
+    './faqQuestion',
+    './faqQuestionCollection',
     'routing'
-], function (Backbone, BaseModel,TrModel,TrCollection, Routing) {
+], function (Backbone, BaseModel,TrModel,TrCollection, FaqModel, FaqCollection, Routing) {
     'use strict';
 
 
@@ -20,7 +22,7 @@ define([
                 "key":            'translations',
                 "relatedModel":   TrModel,
                 "collectionType": TrCollection,
-            }
+            },
         ],
 
         "url":       function () {

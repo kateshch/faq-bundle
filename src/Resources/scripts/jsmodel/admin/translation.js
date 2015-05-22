@@ -1,6 +1,6 @@
 define([
     'backbone',
-    '../util/basemodel',
+    '../../util/basemodel',
     'routing',
 ], function (Backbone, BaseModel) {
     'use strict';

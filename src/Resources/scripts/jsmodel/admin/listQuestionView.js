@@ -7,15 +7,16 @@ define([
     './faqQuestionCollection',
     './editQuestionView',
     './faqQuestion',
-], function ($, _, Backbone, templating,Routing, FaqQuestionCollection, EditQuestionView, FaqQuestion) {
+], function ($, _, Backbone, templating, Routing, FaqQuestionCollection, EditQuestionView, FaqQuestion) {
     'use strict';
 
-    var viewId = '@KateshchFaq/Widgets/listQuestions.twig';
+    var viewId = '@KateshchFaq/Widgets/Admin/listQuestions.twig';
 
     var View = Backbone.View.extend({
         template: templating.get(viewId),
 
         initialize: function () {
+            this.editQuestionView = [];
             var collection = new FaqQuestionCollection();
             collection.fetch();
             this.model = collection;
@@ -24,8 +25,8 @@ define([
         },
 
         "events": {
-            "click .add-question": 'newQuest',
-            "click .edit-question": 'editQuest',
+            "click .add-question":    'newQuest',
+            "click .edit-question":   'editQuest',
             "click .remove-question": 'removeQuest'
         },
 
@@ -41,7 +42,7 @@ define([
                             el:    this.$el.find('.new-question')
                         });
                     this.newQuestionView.render();
-                    this.newQuestionView.on('newModel', function(){
+                    this.newQuestionView.on('newModel', function () {
                         this.model.fetch();
                     }, this);
                 }.bind(this)
@@ -57,7 +58,7 @@ define([
             this.editQuestionView[index] = new EditQuestionView(
                 {
                     model: model,
-                    el:    this.$el.find('.edit-question-'+index)
+                    el:    this.$el.find('.edit-question-' + index)
                 });
             this.editQuestionView[index].render();
 
@@ -68,21 +69,20 @@ define([
             var obj = this.$(e.currentTarget),
                 id = obj.data('id');
             $.ajax({
-                type:'put',
-                url: Routing.generate('faq_question_delete',{"question": id}),
-                success:_.bind(function () {
+                type:    'put',
+                url:     Routing.generate('faq_question_delete', {"question": id}),
+                success: _.bind(function () {
                     this.model.fetch();
                 }, this)
             });
         },
 
 
-
         render: function () {
-                this.$el.html(this.template({
-                    model: this.model
-                }));
-            }
+            this.$el.html(this.template({
+                model: this.model
+            }));
+        }
     });
 
     return View;

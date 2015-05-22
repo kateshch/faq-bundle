@@ -58,7 +58,6 @@ class FaqCategory
 
     /**
      * @var FaqQuestion[]|Collection
-     * @Serializer\Exclude
      * @ORM\OneToMany(targetEntity="Kateshch\FaqBundle\Entity\FaqQuestion", mappedBy="category", cascade={"persist", "remove"})
      **/
     protected $questions;

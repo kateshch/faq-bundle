@@ -3,8 +3,8 @@ requirejs([
     'lodash',
     'backbone',
     'routing',
-    'kateshch-faq/listQuestionView',
-    'kateshch-faq/listCategoriesView',
+    'kateshch-faq/admin/listQuestionView',
+    'kateshch-faq/admin/listCategoriesView',
     'templating',
     'domReady!',
 ], function ($, _, Backbone,Routing, ListQuestionView, ListCategoriesView, templating ) {
