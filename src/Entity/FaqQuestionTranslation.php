@@ -21,14 +21,13 @@ class FaqQuestionTranslation
 
     /**
      * @var string
-     * @Assert\NotBlank(message="Please, enter your question!")
      * @ORM\Column(type="string",length=200, nullable=true)
      */
     protected $name;
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank(message="Please, enter your question!")
      * @ORM\Column(type="text")
      */
     protected $message;

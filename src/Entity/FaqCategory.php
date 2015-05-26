@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\OrderBy;
 use Werkint\Bundle\FrameworkExtraBundle\Model\Translatable;
 use JMS\Serializer\Annotation as Serializer;
+use Kateshch\FaqBundle\Entity\FaqQuestion;
 
 /**
  * TODO: write "FaqCategory" info
@@ -118,6 +119,18 @@ class FaqCategory
     {
         $this->questions = $questions;
         return $this;
+    }
+
+    /**
+     * @return array|array[]
+     * @Serializer\VirtualProperty()
+     * @Serializer\SerializedName("activeQuestions")
+     */
+    public function getActiveQuestions()
+    {
+        return $this->getQuestions()->filter(function (FaqQuestion $question) {
+            return $question->getAnswer()->getMessage();
+        });
     }
 
 
