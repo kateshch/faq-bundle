@@ -29,8 +29,16 @@ define([
 
         "saveQuestion": function (e) {
             e.preventDefault();
-            console.log(this.model);
-            this.model.save();
+            this.model.save({},{
+                success: function(model, response){
+                    if(response.errors){
+                        _.each(response.errors, function(error){
+                            alert(error);
+                        });
+                    }
+
+                }
+            });
         },
 
         render: function () {

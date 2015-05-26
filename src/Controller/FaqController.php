@@ -95,7 +95,6 @@ class FaqController
     }
 
 
-
     /**
      * @ApiDoc(
      *   description="Добавляет вопрос",
@@ -104,12 +103,23 @@ class FaqController
      * @Rest\Post("/question/new", name="faq_new_question", defaults={"_format": "json"})
      * @ParamConverter("faqQuestion", class="Kateshch\FaqBundle\Entity\FaqQuestion", converter="fos_rest.request_body")
      * @Rest\View()
+     * @param FaqQuestion $faqQuestion
+     * @param ConstraintViolationListInterface $validationErrors
+     * @return FaqQuestion
      */
-    public function saveQuestionAction(FaqQuestion $faqQuestion)
+    public function saveQuestionAction(FaqQuestion $faqQuestion, ConstraintViolationListInterface $validationErrors)
     {
-        $this->manager->persist($faqQuestion);
-        $this->manager->flush();
-        return $faqQuestion;
+
+        $errorsList = [];
+        for ($i = 0; $i < count($validationErrors); $i++) {
+            $errorsList[] = $validationErrors[$i]->getMessage();
+        }
+        if (!count($validationErrors)) {
+            $this->manager->persist($faqQuestion);
+            $this->manager->flush();
+        }
+        $ret = ['errors' => $errorsList, 'ok' => !count($validationErrors)];
+        return $ret;
     }
 
     /**

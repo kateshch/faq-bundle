@@ -5,6 +5,7 @@ namespace Kateshch\FaqBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\EntityRepository;
 use Knp\DoctrineBehaviors\Model as ORMBehaviors;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  *
@@ -20,6 +21,7 @@ class FaqQuestionTranslation
 
     /**
      * @var string
+     * @Assert\NotBlank(message="Please, enter your question!")
      * @ORM\Column(type="string",length=200, nullable=true)
      */
     protected $name;

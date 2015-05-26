@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Model\Timestampable\Timestampable;
 use Werkint\Bundle\FrameworkExtraBundle\Model\Translatable;
 use JMS\Serializer\Annotation as Serializer;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * TODO: write "FaqMessage" info
@@ -39,6 +40,7 @@ class FaqQuestion
     /**
      * @Serializer\Type("array< Kateshch\FaqBundle\Entity\FaqQuestionTranslation>")
      * @Serializer\Accessor(getter="getATranslations", setter="setATranslations")
+     * @Assert\Valid
      */
     protected $translations;
 
