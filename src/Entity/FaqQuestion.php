@@ -97,6 +97,14 @@ class FaqQuestion
     protected $category;
 
     /**
+     * @ORM\OneToOne(targetEntity="Kateshch\FaqBundle\Entity\File", cascade={"persist"})
+     * @ORM\JoinColumn(name="file_id", referencedColumnName="id")
+     * @Serializer\Type("Kateshch\FaqBundle\Entity\File")
+     * @var File|null
+     */
+    protected $file;
+
+    /**
      * @return int
      */
     public function getId()
@@ -181,11 +189,31 @@ class FaqQuestion
      * @param int $mark
      * @return $this
      */
+
     public function setMark($mark)
     {
         $this->mark = $mark;
         return $this;
     }
+
+    /**
+     * @return File|null
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    /**
+     * @param File|null $file
+     * @return $this
+     */
+    public function setFile($file)
+    {
+        $this->file = $file;
+        return $this;
+    }
+
 
 
 

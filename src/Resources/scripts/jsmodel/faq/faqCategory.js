@@ -28,6 +28,13 @@ define([
                 "key":            'questions',
                 "relatedModel":   FaqModel,
                 "collectionType": FaqCollection,
+            },
+            ,
+            {
+                "type":           Backbone.HasMany,
+                "key":            'activeQuestions',
+                "relatedModel":   FaqModel,
+                "collectionType": FaqCollection,
             }
         ],
     });

@@ -104,11 +104,7 @@ class FaqCategory
      */
     public function getQuestions()
     {
-        $crt = Criteria::create();
-        /** @var Criteria $crt */
-        $crt->orderBy(['mark' => $crt::DESC]);
-        $questions = $this->questions;
-        return $questions->matching($crt);
+        return $this->questions;
     }
 
     /**
@@ -128,9 +124,9 @@ class FaqCategory
      */
     public function getActiveQuestions()
     {
-        return $this->getQuestions()->filter(function (FaqQuestion $question) {
-            return $question->getAnswer()->getMessage();
-        });
+        return $this->getQuestions()?$this->getQuestions()->filter(function (FaqQuestion $question) {
+            return ($question->getAnswer() && $question->getAnswer()->getMessage()) ;
+        }):[];
     }
 
 

@@ -1,7 +1,9 @@
 <?php
 namespace Kateshch\FaqBundle\Controller;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Kateshch\FaqBundle\Entity\FaqCategory;
 use Kateshch\FaqBundle\Entity\FaqCategoryRepository;
@@ -52,6 +54,12 @@ class FaqController
      */
     private $repoFaqQuest;
 
+    /**
+     * @DI\Inject("faq.repo.file")
+     * @var EntityRepository
+     */
+    private $repoFile;
+
 
     // -- Action ---------------------------------------
     /**
@@ -71,13 +79,11 @@ class FaqController
      * @Rest\Get("/category", name="faq_categories" ,defaults={"_format": "json"})
      * @Rest\View()
      */
-
     public function listCategoryAction()
     {
         $categories = $this->repoFaqCategory->findAll();
         return $categories;
     }
-
 
 
     /**
@@ -107,9 +113,8 @@ class FaqController
      * @param ConstraintViolationListInterface $validationErrors
      * @return FaqQuestion
      */
-    public function saveQuestionAction(FaqQuestion $faqQuestion, ConstraintViolationListInterface $validationErrors)
+    public function saveQuestionAction(FaqQuestion $faqQuestion, ConstraintViolationListInterface $validationErrors, Request $request)
     {
-
         $errorsList = [];
         for ($i = 0; $i < count($validationErrors); $i++) {
             $errorsList[] = $validationErrors[$i]->getMessage();

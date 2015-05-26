@@ -5,7 +5,8 @@ define([
     './faqCategory',
     '../translation/translation',
     '../translation/translationCollection',
-], function (Backbone, Routing,BaseModel, CategoryModel,TrModel,TrCollection) {
+    './file',
+], function (Backbone, Routing,BaseModel, CategoryModel,TrModel,TrCollection,FileModel) {
     'use strict';
 
     var Model = BaseModel.extend({
@@ -21,12 +22,24 @@ define([
                 "relatedModel": CategoryModel,
             },
             {
+                "type":         Backbone.HasOne,
+                "key":          'file',
+                "relatedModel": FileModel,
+            },
+            {
                 "type":         Backbone.HasMany,
                 "key":          'translations',
                 "relatedModel": TrModel,
                 "collectionType": TrCollection
             }
         ],
+
+
+        "initialize": function (option) {
+            if (!this.get('file')) {
+                this.set('file', new FileModel());
+            }
+        },
 
 
         "url":       function () {

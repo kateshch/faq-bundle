@@ -48,7 +48,6 @@ requirejs([
     });
 
     var view = new View();
-    console.log();
 
 
 

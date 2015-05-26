@@ -2,6 +2,7 @@
 namespace Kateshch\FaqBundle\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Kateshch\FaqBundle\Entity\File;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Kateshch\FaqBundle\Entity\FaqAnswer;
@@ -193,6 +194,7 @@ class AdminController extends Controller
         return new FaqQuestion();
     }
 
+
     /**
      * @ApiDoc(
      *   description="Редактирует вопрос"
@@ -217,13 +219,6 @@ class AdminController extends Controller
     {
         $this->manager->persist($faqQuestion);
         $this->manager->flush();
-        if ($faqQuestion->getAnswer()->getId() && $faqQuestion->getEmail()) {
-            $content = $this->render('KateshchFaqBundle::email.twig', ['answer' => $faqQuestion->getAnswer()->getMessage(), 'question' => $faqQuestion->getMessage()]);
-            $message = \Swift_Message::newInstance()->setTo($faqQuestion->getEmail())->setBody($content, 'text/html');
-            $mailer = $this->get('mailer');
-            $result = $mailer->send($message);
-
-        }
         return $faqQuestion;
     }
 

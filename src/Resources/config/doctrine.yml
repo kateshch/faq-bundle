@@ -3,6 +3,8 @@ parameters:
     Kateshch\FaqBundle\Entity\FaqQuestionRepository
   faq.repo.category.class:
     Kateshch\FaqBundle\Entity\FaqCategoryRepository
+  faq.repo.file.class:
+    Kateshch\FaqBundle\Entity\FileRepository
 
 services:
   faq.repo.question:
@@ -15,3 +17,8 @@ services:
     factory_service:  doctrine.orm.entity_manager
     factory_method:   getRepository
     arguments: [KateshchFaqBundle:FaqCategory]
+  faq.repo.file:
+    class:            %faq.repo.file.class%
+    factory_service:  doctrine.orm.entity_manager
+    factory_method:   getRepository
+    arguments: [KateshchFaqBundle:File]

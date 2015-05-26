@@ -82,6 +82,8 @@ define([
             this.$el.html(this.template({
                 model: this.model
             }));
+            this.delegateEvents();
+            return this;
         }
     });
 
