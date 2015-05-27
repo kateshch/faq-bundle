@@ -83,6 +83,8 @@ define([
                     model: this.model
                 }));
             }
+            this.delegateEvents();
+            return this;
         },
     });
 

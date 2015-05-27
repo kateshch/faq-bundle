@@ -32,7 +32,11 @@ define([
                 "model":      this.model,
             }));
 
+            this.delegateEvents();
+
             this.modelBinder.bind(this.model, this.el);
+
+            return this;
         },
     });
 

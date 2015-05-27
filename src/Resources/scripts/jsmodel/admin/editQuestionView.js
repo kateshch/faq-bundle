@@ -37,6 +37,8 @@ define([
                 "categories": this.categories
             }));
 
+            this.delegateEvents();
+
             var bindings = Backbone.ModelBinder.createDefaultBindings(this.el, 'name');
 
             _.extend(bindings.category, {
@@ -48,6 +50,7 @@ define([
             });
 
             this.modelBinder.bind(this.model, this.el, bindings);
+            return this;
         },
     });
 
