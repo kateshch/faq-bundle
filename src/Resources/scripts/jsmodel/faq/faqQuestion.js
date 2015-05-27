@@ -35,13 +35,6 @@ define([
         ],
 
 
-        "initialize": function (option) {
-            if (!this.get('file')) {
-                this.set('file', new FileModel());
-            }
-        },
-
-
         "url":       function () {
             if (this.isNew()) {
                 return Routing.generate('faq_new_question');

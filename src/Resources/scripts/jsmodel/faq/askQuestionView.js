@@ -14,13 +14,12 @@ define([
     var View = Backbone.View.extend({
         "template": templating.get(viewId),
 
-        "categories": new FaqCategoryCollection(),
 
         initialize: function () {
             this.model = new FaqQuestion();
             this.modelBinder = new Backbone.ModelBinder();
-            this.categories.fetch();
-            this.categories.on('sync', this.render, this);
+            this.model.set('errors',null);
+            this.model.on('change:errors', this.render,this);
         },
 
         "events": {

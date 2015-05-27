@@ -250,7 +250,6 @@ class AdminController extends Controller
         $this->manager->flush();
         return $question;
     }
-
 }
 
 

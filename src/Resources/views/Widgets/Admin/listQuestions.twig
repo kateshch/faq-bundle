@@ -39,7 +39,11 @@
               <a data-toggle="collapse" href="#faq{{ i-1 }}" class="faq-question"><p>Question:{{ item.message }}</p>
                 <p>Answer:  {{ item.answer.message }}</p>
                 <p> {% if item.file.uri %}
-                    <img src="{{ item.file.uri }}" height="100px">
+                    {% if item.file.extension in ['jpeg','png','jpg'] %}
+                      <img src="{{  item.file.uri }}" height="100px">
+                    {% else %}
+                      <a href="{{ item.file.uri }}" download="{{ item.file.basename}}" >{{ item.file.basename }}</a>
+                    {% endif %}
                   {% endif %}</p>
               </a>
               <small>Added by <strong>{% if item.name %}{{ item.name }}{% else %}anonym{% endif %}</strong>
