@@ -91,7 +91,7 @@ class FaqQuestion
     /**
      * @var FaqCategory|null
      * @Serializer\Type("Kateshch\FaqBundle\Entity\FaqCategory")
-     * @ORM\ManyToOne(targetEntity="Kateshch\FaqBundle\Entity\FaqCategory")
+     * @ORM\ManyToOne(targetEntity="Kateshch\FaqBundle\Entity\FaqCategory", cascade={"persist"})
      * @ORM\JoinColumn(name="ref_category", referencedColumnName="id")
      */
     protected $category;

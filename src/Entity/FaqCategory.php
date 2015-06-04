@@ -27,7 +27,13 @@ class FaqCategory
     use Translatable;
 
 
-
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->setQuestions(new ArrayCollection());
+    }
     /**
      * @Serializer\Type("array< Kateshch\FaqBundle\Entity\FaqCategoryTranslation>")
      * @Serializer\Accessor(getter="getATranslations", setter="setATranslations")
