@@ -4,7 +4,7 @@ define([
     'backbone',
     'templating',
     './faqCategoryCollection',
-    'backbone/modelbinder'
+    'backbone.modelbinder'
 ], function ($, _, Backbone, templating, FaqCategoryCollection) {
     'use strict';
 

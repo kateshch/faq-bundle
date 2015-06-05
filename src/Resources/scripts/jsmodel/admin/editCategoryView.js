@@ -3,7 +3,7 @@ define([
     'lodash',
     'backbone',
     'templating',
-    'backbone/modelbinder'
+    'backbone.modelbinder'
 ], function ($, _, Backbone, templating) {
     'use strict';
 
@@ -29,7 +29,7 @@ define([
 
         render: function () {
             this.$el.html(this.template({
-                "model":      this.model,
+                "model": this.model,
             }));
 
             this.delegateEvents();

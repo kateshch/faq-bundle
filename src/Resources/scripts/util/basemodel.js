@@ -1,8 +1,8 @@
 define([
     'lodash',
     'backbone',
-    'backbone/relational',
-    'backbone/modelbinder',
+    'backbone.relational',
+    'backbone.modelbinder',
 ], function (_, Backbone) {
     'use strict';
 
