@@ -1,12 +1,12 @@
 define([
     'backbone',
-    'routing',
-    '../../util/basemodel',
-], function (Backbone,Routing,BaseModel) {
+    'router',
+    '../util/basemodel',
+], function (Backbone, Routing, BaseModel) {
     'use strict';
 
     var Model = BaseModel.extend({
-        "defaults":  {
+        "defaults": {
             "extension": undefined,
             "basename": undefined,
             "uri": undefined,

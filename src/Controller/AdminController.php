@@ -2,29 +2,23 @@
 namespace Kateshch\FaqBundle\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Kateshch\FaqBundle\Entity\File;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use FOS\RestBundle\Controller\Annotations as Rest;
+use JMS\DiExtraBundle\Annotation as DI;
 use Kateshch\FaqBundle\Entity\FaqAnswer;
 use Kateshch\FaqBundle\Entity\FaqCategory;
 use Kateshch\FaqBundle\Entity\FaqCategoryRepository;
-use JMS\DiExtraBundle\Annotation as DI;
 use Kateshch\FaqBundle\Entity\FaqQuestion;
 use Kateshch\FaqBundle\Entity\FaqQuestionRepository;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Validator\ConstraintViolationListInterface;
-use Werkint\Bundle\FrameworkExtraBundle\Service\Mailer\Mailer;
 
 /**
- * TODO: write "AdminController" info
- *
  * @author Kate Shcherbak <katescherbak@gmail.com>
  *
  * @Rest\Route("/edit")
  */
-class AdminController extends Controller
+class AdminController
 {
     /**
      * @DI\Inject("doctrine.orm.entity_manager")
@@ -43,7 +37,6 @@ class AdminController extends Controller
      * @var FaqCategoryRepository
      */
     private $repoFaqCategory;
-
 
 
     // -- Action ---------------------------------------

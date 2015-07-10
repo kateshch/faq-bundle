@@ -4,18 +4,16 @@ define([
     'backbone',
     'templating',
     './faqQuestion',
-    './faqCategoryCollection',
     'backbone.modelbinder'
-], function ($, _, Backbone, templating, FaqQuestion, FaqCategoryCollection) {
+], function ($, _, Backbone, templating, FaqQuestion) {
     'use strict';
 
-    var viewId = '@KateshchFaq/Widgets/Faq/askQuestion.twig';
-
     var View = Backbone.View.extend({
-        "template": templating.get(viewId),
-
+        "template": '@KateshchFaq/Widgets/Faq/askQuestion.twig',
 
         initialize: function () {
+            this.template = templating.get(this.template);
+
             this.model = new FaqQuestion();
             this.modelBinder = new Backbone.ModelBinder();
             this.model.set('errors', null);
@@ -42,7 +40,7 @@ define([
 
         render: function () {
             this.$el.html(this.template({
-                "model":      this.model,
+                "model": this.model,
                 "categories": this.categories
             }));
 

@@ -3,46 +3,43 @@ define([
     'lodash',
     'backbone',
     'templating',
-    'routing',
-    './faqQuestionCollection',
-    './editQuestionView',
-    './faqQuestion',
-], function ($, _, Backbone, templating, Routing, FaqQuestionCollection, EditQuestionView, FaqQuestion) {
+    'router',
+    './faqCategoryCollection',
+    './editCategoryView',
+    './faqCategory',
+], function ($, _, Backbone, templating, Routing, FaqCategoriesCollection, EditCategoryView, FaqCategory) {
     'use strict';
 
-    var viewId = '@KateshchFaq/Widgets/Admin/listQuestions.twig';
-
     var View = Backbone.View.extend({
-        template: templating.get(viewId),
+        template: '@KateshchFaq/Widgets/Admin/listCategories.twig',
 
         initialize: function () {
-            this.editQuestionView = [];
-            var collection = new FaqQuestionCollection();
+            this.template = templating.get(this.template);
+
+            var collection = new FaqCategoriesCollection();
             collection.fetch();
             this.model = collection;
-
             this.model.on('sync', this.render, this);
         },
 
         "events": {
-            "click .add-question":    'newQuest',
-            "click .edit-question":   'editQuest',
-            "click .remove-question": 'removeQuest'
+            "click .add-category": 'newQuest',
+            "click .edit-category": 'editQuest',
+            "click .remove-category": 'removeQuest'
         },
 
         "newQuest": function (e) {
             e.preventDefault();
-            var model = new FaqQuestion(),
-                that = this;
+            var model = new FaqCategory();
             model.fetch({
                 success: function () {
-                    this.newQuestionView = new EditQuestionView(
+                    this.newCategoryView = new EditCategoryView(
                         {
-                            model: new FaqQuestion(),
-                            el:    this.$el.find('.new-question')
+                            model: new FaqCategory(),
+                            el: this.$el.find('.new-category')
                         });
-                    this.newQuestionView.render();
-                    this.newQuestionView.on('newModel', function () {
+                    this.newCategoryView.render();
+                    this.newCategoryView.on('newModel', function () {
                         this.model.fetch();
                     }, this);
                 }.bind(this)
@@ -52,15 +49,16 @@ define([
 
         "editQuest": function (e) {
             e.preventDefault();
+
             var obj = this.$(e.currentTarget),
                 index = obj.data('ordinal');
             var model = this.model.at(index);
-            this.editQuestionView[index] = new EditQuestionView(
+            this.editCategoryView = new EditCategoryView(
                 {
                     model: model,
-                    el:    this.$el.find('.edit-question-' + index)
+                    el: this.$el.find('.edit-category-' + index)
                 });
-            this.editQuestionView[index].render();
+            this.editCategoryView.render();
 
         },
 
@@ -69,8 +67,8 @@ define([
             var obj = this.$(e.currentTarget),
                 id = obj.data('id');
             $.ajax({
-                type:    'put',
-                url:     Routing.generate('faq_question_delete', {"question": id}),
+                type: 'put',
+                url: Routing.generate('faq_delete_category', {"category": id}),
                 success: _.bind(function () {
                     this.model.fetch();
                 }, this)
@@ -79,12 +77,14 @@ define([
 
 
         render: function () {
-            this.$el.html(this.template({
-                model: this.model
-            }));
+            if (this.model) {
+                this.$el.html(this.template({
+                    model: this.model
+                }));
+            }
             this.delegateEvents();
             return this;
-        }
+        },
     });
 
     return View;

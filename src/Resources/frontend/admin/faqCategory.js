@@ -1,11 +1,11 @@
 define([
     'backbone',
-    '../../util/basemodel',
+    '../util/basemodel',
     '../translation/translation',
     '../translation/translationCollection',
     './faqQuestion',
     './faqQuestionCollection',
-    'routing'
+    'router'
 ], function (Backbone, BaseModel,TrModel,TrCollection, FaqModel, FaqCollection, Routing) {
     'use strict';
 
@@ -23,20 +23,15 @@ define([
                 "relatedModel":   TrModel,
                 "collectionType": TrCollection,
             },
-            {
-                "type":           Backbone.HasMany,
-                "key":            'questions',
-                "relatedModel":   FaqModel,
-                "collectionType": FaqCollection,
-            },
-            ,
-            {
-                "type":           Backbone.HasMany,
-                "key":            'activeQuestions',
-                "relatedModel":   FaqModel,
-                "collectionType": FaqCollection,
-            }
         ],
+
+        "url":       function () {
+            if (this.isNew()) {
+                return Routing.generate('faq_category_api');
+            } else {
+                return Routing.generate('faq_category_api') + '/' + (this.id || '');
+            }
+        },
     });
 
     return Model;

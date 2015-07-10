@@ -1,25 +1,19 @@
 <?php
 namespace Kateshch\FaqBundle\Controller;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use FOS\RestBundle\Controller\Annotations as Rest;
-use Kateshch\FaqBundle\Entity\FaqCategory;
-use Kateshch\FaqBundle\Entity\FaqCategoryRepository;
 use JMS\DiExtraBundle\Annotation as DI;
+use Kateshch\FaqBundle\Entity\FaqCategoryRepository;
 use Kateshch\FaqBundle\Entity\FaqQuestion;
 use Kateshch\FaqBundle\Entity\FaqQuestionRepository;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Component\BrowserKit\Response;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 /**
- * TODO: write "FaqController" info
- *
  * @author Kate Shcherbak <katescherbak@gmail.com>
  */
 class FaqController
@@ -29,12 +23,6 @@ class FaqController
      * @var EntityManagerInterface
      */
     private $manager;
-
-    /**
-     * @DI\Inject("service_container")
-     * @var ContainerInterface;
-     */
-    private $container;
 
     /**
      * @DI\Inject("faq.repo.category")
@@ -60,7 +48,6 @@ class FaqController
      */
     private $repoFile;
 
-
     // -- Action ---------------------------------------
     /**
      * @ApiDoc(
@@ -74,7 +61,6 @@ class FaqController
         return [];
     }
 
-
     /**
      * @Rest\Get("/category", name="faq_categories" ,defaults={"_format": "json"})
      * @Rest\View()
@@ -84,7 +70,6 @@ class FaqController
         $categories = $this->repoFaqCategory->findAll();
         return $categories;
     }
-
 
     /**
      * @ApiDoc(
@@ -99,7 +84,6 @@ class FaqController
         $questions = $this->repoFaqQuest->findAllWithAnswer();
         return ['categories' => $categories, 'questions' => $questions];
     }
-
 
     /**
      * @ApiDoc(
@@ -141,8 +125,6 @@ class FaqController
         $this->manager->flush();
         return $question;
     }
-
-
 }
 
 

@@ -1,34 +1,36 @@
 define([
     'backbone',
-    'routing',
-    '../../util/basemodel',
+    'router',
+    '../util/basemodel',
     './faqAnswer',
     './faqCategory',
     '../translation/translation',
     '../translation/translationCollection',
-], function (Backbone, Routing,BaseModel, AnswerModel, CategoryModel,TrModel,TrCollection) {
+], function (Backbone, Routing, BaseModel, AnswerModel, CategoryModel, TrModel, TrCollection) {
     'use strict';
 
     var Model = BaseModel.extend({
 
-        "defaults":  {
-            "translations": new TrCollection(),
+        "defaults": function () {
+            return {
+                "translations": new TrCollection(),
+            };
         },
 
         "relations": [
             {
-                "type":              Backbone.HasOne,
-                "key":               'answer',
-                "relatedModel":      AnswerModel,
+                "type": Backbone.HasOne,
+                "key": 'answer',
+                "relatedModel": AnswerModel,
             },
             {
-                "type":         Backbone.HasOne,
-                "key":          'category',
+                "type": Backbone.HasOne,
+                "key": 'category',
                 "relatedModel": CategoryModel,
             },
             {
-                "type":         Backbone.HasMany,
-                "key":          'translations',
+                "type": Backbone.HasMany,
+                "key": 'translations',
                 "relatedModel": TrModel,
                 "collectionType": TrCollection
             }
@@ -46,7 +48,7 @@ define([
             }
         },
 
-        "url":       function () {
+        "url": function () {
             if (this.isNew()) {
                 return Routing.generate('faq_question_api');
             } else {

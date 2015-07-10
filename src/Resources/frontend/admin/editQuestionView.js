@@ -8,14 +8,16 @@ define([
 ], function ($, _, Backbone, templating, FaqCategoryCollection) {
     'use strict';
 
-    var viewId = '@KateshchFaq/Widgets/Admin/editQuestion.twig';
-
     var View = Backbone.View.extend({
-        "template": templating.get(viewId),
-
-        "categories": new FaqCategoryCollection(),
+        "template": '@KateshchFaq/Widgets/Admin/editQuestion.twig',
 
         initialize: function () {
+            this.template = templating.get(this.template);
+
+            if (!this.categories) {
+                this.categories = new FaqCategoryCollection();
+            }
+
             this.modelBinder = new Backbone.ModelBinder();
             this.categories.fetch();
             this.categories.on('sync', this.render, this);
@@ -33,7 +35,7 @@ define([
 
         render: function () {
             this.$el.html(this.template({
-                "model":      this.model,
+                "model": this.model,
                 "categories": this.categories
             }));
 
