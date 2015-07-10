@@ -3,21 +3,16 @@ define([
     'lodash',
     'backbone',
     'templating',
-    'routing',
-    './faqCategoryCollection',
-    './faqCategory',
-], function ($, _, Backbone, templating,Routing, FaqCategoriesCollection, FaqCategory) {
+], function ($, _, Backbone, templating) {
     'use strict';
 
-    var viewId = '@KateshchFaq/Widgets/Faq/listCategories.twig';
-
     var View = Backbone.View.extend({
-        template: templating.get(viewId),
+        template: '@KateshchFaq/Widgets/Faq/listCategories.twig',
 
         initialize: function () {
+            this.template = templating.get(this.template);
             this.model.on('sync', this.render, this);
         },
-
 
         render: function () {
             if (this.model) {

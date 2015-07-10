@@ -2,7 +2,7 @@ define([
     'lodash',
     'backbone',
     './translation',
-    'routing',
+    'router',
 ], function (_, Backbone, TrModel) {
     'use strict';
 

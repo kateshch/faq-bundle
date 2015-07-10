@@ -1,7 +1,7 @@
 define([
     'backbone',
     './faqQuestion',
-    'routing'
+    'router'
 ], function (Backbone, FaqQuestion, Routing) {
     'use strict';
 

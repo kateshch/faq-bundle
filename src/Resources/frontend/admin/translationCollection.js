@@ -2,16 +2,15 @@ define([
     'lodash',
     'backbone',
     './translation',
-    'routing',
+    'router',
 ], function (_, Backbone, TrModel) {
     'use strict';
 
 
     var TrCollection = Backbone.Collection.extend({
-        'model': TrModel,
+        "model": TrModel,
 
         "initialize": function () {
-
             var old = this.find(function (obj) {
                 return obj.get('locale') === 'en';
             });

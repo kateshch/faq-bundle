@@ -3,21 +3,20 @@ define([
     'lodash',
     'backbone',
     'templating',
-    'routing',
+    'router',
     './listQuestionView',
     './listCategoriesView',
 ], function ($, _, Backbone, templating, Routing, ListQuestionView, ListCategoriesView) {
     'use strict';
 
-    var viewId = '@KateshchFaq/Widgets/Admin/indexView.twig';
-
     var View = Backbone.View.extend({
-        template: templating.get(viewId),
+        template: '@KateshchFaq/Widgets/Admin/indexView.twig',
 
         initialize: function () {
+            this.template = templating.get(this.template);
             this.listQuestionView = new ListQuestionView();
             this.listCategoriesView = new ListCategoriesView();
-            this.model.on('sync', this.render, this);
+            //this.model.on('sync', this.render, this);
         },
 
 

@@ -1,10 +1,9 @@
 define([
     'backbone',
-    '../../util/basemodel',
-    'routing',
+    '../util/basemodel',
+    'router',
 ], function (Backbone, BaseModel) {
     'use strict';
-
 
     var TrModel = BaseModel.extend({
         "defaults": {

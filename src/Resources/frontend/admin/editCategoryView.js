@@ -7,13 +7,11 @@ define([
 ], function ($, _, Backbone, templating) {
     'use strict';
 
-    var viewId = '@KateshchFaq/Widgets/Admin/editCategory.twig';
-
     var View = Backbone.View.extend({
-        "template": templating.get(viewId),
-
+        "template": '@KateshchFaq/Widgets/Admin/editCategory.twig',
 
         initialize: function () {
+            this.template = templating.get(this.template);
             this.modelBinder = new Backbone.ModelBinder();
         },
 

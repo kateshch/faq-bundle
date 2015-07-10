@@ -2,11 +2,11 @@ requirejs([
     'jquery',
     'lodash',
     'backbone',
-    'routing',
+    'router',
     'kateshch-faq/admin/indexView',
     'twig',
     'domReady!',
-], function ($, _, Backbone,Routing, IndexView, Twig) {
+], function ($, _, Backbone, Routing, IndexView, Twig) {
     'use strict';
 
 
@@ -24,9 +24,6 @@ requirejs([
 
     var view = new IndexView({el: cont});
     view.render();
-
-
-
 
 
 });
