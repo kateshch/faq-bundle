@@ -2,7 +2,7 @@
 namespace Kateshch\FaqBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Knp\DoctrineBehaviors\Model as ORMBehaviors;
+use Werkint\Bundle\FrameworkExtraBundle\Model\Translation;
 
 /**
  * TODO: write "FaqCategoryTranslation" info
@@ -15,7 +15,7 @@ use Knp\DoctrineBehaviors\Model as ORMBehaviors;
  */
 class FaqCategoryTranslation
 {
-    use ORMBehaviors\Translatable\Translation;
+    use Translation;
 
     // -- Entity ---------------------------------------
 

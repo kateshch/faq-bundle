@@ -1,11 +1,9 @@
 <?php
-
 namespace Kateshch\FaqBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\EntityRepository;
-use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 use Symfony\Component\Validator\Constraints as Assert;
+use Werkint\Bundle\FrameworkExtraBundle\Model\Translation;
 
 /**
  *
@@ -16,8 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class FaqQuestionTranslation
 {
-    use ORMBehaviors\Translatable\Translation;
-
+    use Translation;
 
     /**
      * @var string
@@ -68,7 +65,6 @@ class FaqQuestionTranslation
         $this->message = $message;
         return $this;
     }
-
 
 
 }

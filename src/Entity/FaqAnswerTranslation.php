@@ -1,10 +1,9 @@
 <?php
-
 namespace Kateshch\FaqBundle\Entity;
 
-use Doctrine\ORM\EntityRepository;
-use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 use Doctrine\ORM\Mapping as ORM;
+use Knp\DoctrineBehaviors\Model as ORMBehaviors;
+use Werkint\Bundle\FrameworkExtraBundle\Model\Translation;
 
 /**
  *
@@ -13,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class FaqAnswerTranslation
 {
-    use ORMBehaviors\Translatable\Translation;
+    use Translation;
 
     /**
      * @var string
@@ -39,7 +38,6 @@ class FaqAnswerTranslation
         $this->message = $message;
         return $this;
     }
-
 
 
 }
