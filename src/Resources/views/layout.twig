@@ -23,11 +23,10 @@
 
       {% block baseScripts %}
         {#{{ require_js_initialize() }}#}
-        <script type="text/javascript" src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
-        <script type="text/javascript"
-            src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
+      <script src="{{ asset('assets/js/require.js') }}"></script>
+         {{ webapp_head_init() }}
+        <script src="{{ asset('bundles/kateshchfaq/config.js') }}"></script>
         <script src="{{ asset('bundles/bazingajstranslation/js/translator.min.js') }}"></script>
-       <script src="{{ path('bazinga_jstranslation_js', {'domain': 'SdelkaAppBundle', 'locales': 'en, '~app.request.locale}) }}"></script>
       <script src="{{ asset('bundles/kateshchfaq/inspinia/bootstrap.min.js') }}"></script>
       {% endblock %}
 

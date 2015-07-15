@@ -10,7 +10,7 @@
   "main": "bower.json",
   "dependencies": {
     "underscore.string": "*",
-    "backbone-chaining": "~0.1.4"
+    "backbone.chaining": "*"
   },
   "license": "proprietary",
   "ignore": [
