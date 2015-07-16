@@ -36,9 +36,12 @@ define([
         render: function () {
             this.$el.html(this.template({
                 "model": this.model,
-                "categories": this.categories
+                "categories": this.categories,
+                "langs": window.$langs
             }));
-
+            _.each(this.$('.tabs'), function(obj){
+                $(obj).tabslet();
+            });
             this.delegateEvents();
 
             var bindings = Backbone.ModelBinder.createDefaultBindings(this.el, 'name');

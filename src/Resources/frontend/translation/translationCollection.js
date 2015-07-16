@@ -12,23 +12,34 @@ define([
 
         "initialize": function () {
 
-            var old = this.find(function (obj) {
-                return obj.get('locale') === 'en';
-            });
+            var old = this;
             var newTranslations = [];
-            if (!old) {
-                var translation = new TrModel({
-                    "locale": 'en'
+            _.each(window.$langs, _.bind(function (language, el) {
+                var old = this.find(function (obj) {
+                    return obj.get('locale') === language;
                 });
-                newTranslations.push(translation);
-            } else {
-                newTranslations.push(old);
-            }
-            this.reset();
-            this.add(newTranslations);
+                if (!old) {
+                    var translation = new TrModel({
+                        "locale": language
+                    });
+                    newTranslations.push(translation);
+                } else {
+                    newTranslations.push(old);
+                }
+            },this));
+            this.reset(newTranslations);
 
         },
+
+        "findIndex": function(lang){
+            var model = this.find(function (obj) {
+                return obj.get('locale') === lang;
+            });
+            return this.indexOf(model);
+        }
     });
+
+
 
 
     return TrCollection;
