@@ -3,7 +3,8 @@ define([
     'lodash',
     'backbone',
     'templating',
-    'backbone.modelbinder'
+    'backbone.modelbinder',
+    'jquery.tabslet'
 ], function ($, _, Backbone, templating) {
     'use strict';
 
@@ -28,7 +29,11 @@ define([
         render: function () {
             this.$el.html(this.template({
                 "model": this.model,
+                "langs": window.$langs
             }));
+            _.each(this.$('.tabs'), function(obj){
+                $(obj).tabslet();
+            });
 
             this.delegateEvents();
 

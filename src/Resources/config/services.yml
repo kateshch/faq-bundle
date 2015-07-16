@@ -1,0 +1,13 @@
+services:
+  kateshch_faq.kateshchfaqbundleextension:
+    class: Kateshch\FaqBundle\Service\Twig\KateshchFaqBundleExtension
+    public: false
+    arguments:
+      - params:
+          locales:  @=parameter('locales')
+          title:    @=parameter('app.title')
+          langs:    @=parameter('locales_supported')
+      - "@=service('service_container').isScopeActive('request') ? service('request') : null"
+      - %locales_supported%
+    tags:
+      - { name: twig.extension }

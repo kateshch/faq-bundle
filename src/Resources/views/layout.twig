@@ -22,6 +22,10 @@
       {% endblock %}
 
       {% block baseScripts %}
+     <script>
+          window.$langs = {{ var.langs|json_encode|raw }};
+          window.$lang_default = 'en';
+      </script>
         {#{{ require_js_initialize() }}#}
       <script src="{{ asset('assets/js/require.js') }}"></script>
          {{ webapp_head_init() }}

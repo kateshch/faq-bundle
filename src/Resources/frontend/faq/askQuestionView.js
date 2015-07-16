@@ -18,6 +18,7 @@ define([
             this.modelBinder = new Backbone.ModelBinder();
             this.model.set('errors', null);
             this.model.on('change:errors', this.render, this);
+            this.langIndex = this.model.get('translations').findIndex(window.$lang);
         },
 
         "events": {
@@ -41,7 +42,8 @@ define([
         render: function () {
             this.$el.html(this.template({
                 "model": this.model,
-                "categories": this.categories
+                "categories": this.categories,
+                "lang": this.langIndex,
             }));
 
             this.modelBinder.bind(this.model, this.el);

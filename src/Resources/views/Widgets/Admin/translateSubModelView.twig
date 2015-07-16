@@ -1,0 +1,24 @@
+<div class="col-lg-10">
+  <div class="panel blank-panel">
+
+    <div class="panel-heading">
+      <div class="panel-options">
+        <div class='tabs'>
+          <ul class="nav nav-tabs">
+            {% for key in langs %}
+              <li>
+                <a data-view="{{ key }}" class="change-tab" href="#tab-{{ key }}">{{ key }}</a></li>
+            {% endfor %}
+          </ul>
+          {% for key in langs %}
+            {% set transPrefix = 'translations['~(loop.index-1)~']' %}
+            <div id="tab-{{ key }}" class="tab">
+              <textarea name="{{ model }}.{{ transPrefix }}.{{ fieldName }}"></textarea>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
