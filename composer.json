@@ -4,14 +4,13 @@
     "type":              "symfony-bundle",
     "minimum-stability": "stable",
 
-    "require": {
-        "ircmaxell/password-compat"            : "~1.0",
-        "sensio/distribution-bundle"           : "~3.0.12",
-        "sensio/framework-extra-bundle"        : "~3.0",
-        "twig/extensions"                      : "~1.0",
-        "werkint/framework-extra-bundle":       "0.1.*-dev",
-        "werkint/redis-bundle":                 "0.1.*-dev",
-        "nick4fake/doctrine-behaviors":         "dev-master"
+    "require":           {
+        "ircmaxell/password-compat":      "~1.0",
+        "sensio/distribution-bundle":     "~3.0.12",
+        "sensio/framework-extra-bundle":  "~3.0",
+        "twig/extensions":                "~1.0",
+        "werkint/framework-extra-bundle": "0.1.*-dev",
+        "nick4fake/doctrine-behaviors":   "dev-master"
     },
     "require-dev":       {
         "symfony/doctrine-bridge": "~2.2",
