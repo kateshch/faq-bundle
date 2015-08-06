@@ -16,8 +16,7 @@ class FaqAnswerTranslation
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="text",length=200, nullable=true)
+     * @ORM\Column(type="text",length=5000, nullable=true)
      */
     protected $message;
 

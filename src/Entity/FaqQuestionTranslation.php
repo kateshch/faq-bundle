@@ -18,13 +18,13 @@ class FaqQuestionTranslation
 
     /**
      * @var string
-     * @ORM\Column(type="string",length=200, nullable=true)
+     * @ORM\Column(type="string",length=300, nullable=true)
      */
     protected $name;
 
     /**
      * @var string
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="text", length=5000, nullable=true)
      */
     protected $message;
 

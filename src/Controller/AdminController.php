@@ -205,12 +205,11 @@ class AdminController
      *   description="Редактирует вопрос"
      * )
      * @Rest\Put("/api/question/{question}", defaults={"_format": "json"})
-     * @ParamConverter("faqQuestion", class="Kateshch\FaqBundle\Entity\FaqQuestion", converter="fos_rest.request_body")
+     * @ParamConverter("faqQuestion", converter="fos_rest.request_body")
      * @Rest\View()
      */
     public function editQuestionAction(FaqQuestion $faqQuestion, Request $request)
     {
-        $this->manager->persist($faqQuestion);
         $this->manager->flush();
         return $faqQuestion;
     }

@@ -1,13 +1,5 @@
 {% extends '@KateshchFaq/layout.twig' %}
 
-{% block baseScripts %}
-  {{ parent() }}
-  <script type="application/javascript">
-    {% include '@KateshchFaq/Admin/index.js' %}
-  </script>
-{% endblock %}
-
-
 {% twigjs '@KateshchFaq/Widgets/Admin/indexView.twig' %}
 
 {% twigjs '@KateshchFaq/Widgets/Admin/listQuestions.twig' %}
