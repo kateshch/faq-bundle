@@ -3,13 +3,16 @@ define([
     'lodash',
     'backbone',
     'templating',
-    './faqCategoryCollection',
-    'backbone.modelbinder'
-], function ($, _, Backbone, templating, FaqCategoryCollection) {
+    'kateshch-faq/admin/models/faqCategoryCollection',
+    './popUpView',
+    'backbone.modelbinder',
+    'jquery.tabslet'
+], function ($, _, Backbone, templating, FaqCategoryCollection, PopUpView) {
     'use strict';
 
-    var View = Backbone.View.extend({
+    var View = PopUpView.extend({
         "template": '@KateshchFaq/Widgets/Admin/editQuestion.twig',
+        "elPopup": '#popup-edit-question',
 
         initialize: function () {
             this.template = templating.get(this.template);
@@ -18,22 +21,37 @@ define([
                 this.categories = new FaqCategoryCollection();
             }
 
+            if(this.model){
+                this.modelBackup = this.model.toJSON();
+            }
+
             this.modelBinder = new Backbone.ModelBinder();
             this.categories.fetch();
             this.categories.on('sync', this.render, this);
         },
 
         "events": {
-            "click .save-question": "saveQuestion"
+            "click .save-question": "saveQuestion",
+            "click .cancel": function (e) {
+                e.preventDefault();
+                this.model = this.modelBackup;
+                this.trigger('stopEdit');
+                this.destroy();
+            },
         },
 
         "saveQuestion": function (e) {
             e.preventDefault();
-            this.model.save();
-            this.trigger('newModel');
+            this.model.save(null, {
+                success: function () {
+                    this.trigger('stopEdit');
+                    this.destroy();
+                }.bind(this)
+            });
         },
 
         render: function () {
+            this.initialLanguage();
             this.$el.html(this.template({
                 "model":      this.model,
                 "categories": this.categories,

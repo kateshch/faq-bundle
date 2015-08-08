@@ -168,7 +168,7 @@ class AdminController
      * @ApiDoc(
      *   description="Удаление категории"
      * )
-     * @Rest\Put("/api/category/delete/{category}", name="faq_delete_category", defaults={"_format": "json"})
+     * @Rest\Delete("/api/category/{category}", defaults={"_format": "json"})
      * @Rest\View()
      */
     public function deleteCategoryAction(FaqCategory $category, Request $request)
@@ -205,13 +205,14 @@ class AdminController
      *   description="Редактирует вопрос"
      * )
      * @Rest\Put("/api/question/{question}", defaults={"_format": "json"})
-     * @ParamConverter("faqQuestion", converter="fos_rest.request_body")
+     * @ParamConverter("question", converter="fos_rest.request_body")
      * @Rest\View()
      */
-    public function editQuestionAction(FaqQuestion $faqQuestion, Request $request)
+    public function editQuestionAction(FaqQuestion $question, Request $request)
     {
+        $this->manager->persist($question);
         $this->manager->flush();
-        return $faqQuestion;
+        return $question;
     }
 
     /**
@@ -233,7 +234,7 @@ class AdminController
      * @ApiDoc(
      *   description="Удаление вопроса"
      * )
-     * @Rest\Put("/api/question/delete/{question}", name="faq_question_delete", defaults={"_format": "json"})
+     * @Rest\Delete("/api/question/{question}",  defaults={"_format": "json"})
      * @Rest\View()
      */
     public function deleteQuestionAction(FaqQuestion $question, Request $request)

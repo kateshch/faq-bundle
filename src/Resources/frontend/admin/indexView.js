@@ -16,7 +16,6 @@ define([
             this.template = templating.get(this.template);
             this.listQuestionView = new ListQuestionView();
             this.listCategoriesView = new ListCategoriesView();
-            //this.model.on('sync', this.render, this);
         },
 
 

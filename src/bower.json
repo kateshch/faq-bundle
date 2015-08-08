@@ -10,7 +10,8 @@
   "main": "bower.json",
   "dependencies": {
     "underscore.string": "*",
-    "backbone.chaining": "*"
+    "backbone.chaining": "*",
+    "jquery.fancybox": "*"
   },
   "license": "proprietary",
   "ignore": [

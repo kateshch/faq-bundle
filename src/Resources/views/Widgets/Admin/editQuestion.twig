@@ -1,4 +1,4 @@
-<div class="ibox float-e-margins">
+
   <div class="ibox-title">
     <h5>Question form </h5>
   </div>
@@ -6,10 +6,10 @@
     <form class="edit-question-form form-horizontal">
 
       <div class="form-group"><label class="col-sm-2 control-label">Question</label>
-        {% include '@KateshchFaq/Widgets/Admin/translateView.twig' with {'langs': langs,'fieldName': 'message'} %}
+        {% include '@KateshchFaq/Widgets/Admin/translateView.twig' with {'model': model,'fieldName': 'message'} %}
       </div>
       <div class="form-group"><label class="col-sm-2 control-label">Answer</label>
-        {% include '@KateshchFaq/Widgets/Admin/translateSubModelView.twig' with {'langs': langs,'model': 'answer','fieldName': 'message'} %}
+        {% include '@KateshchFaq/Widgets/Admin/translateSubModelView.twig' with {'model': model,'field': 'answer','fieldName': 'message'} %}
       </div>
 
       <div class="form-group"><label class="col-sm-2 control-label">Category</label>
@@ -24,11 +24,10 @@
       </div>
       <div class="form-group">
         <div class="col-sm-4 col-sm-offset-2">
-          <button class="btn btn-white" type="submit">Cancel</button>
+          <button class="btn btn-white cancel">Cancel</button>
           <button type="submit" class="btn btn-primary save-question">Save</button>
         </div>
       </div>
 
     </form>
   </div>
-</div>

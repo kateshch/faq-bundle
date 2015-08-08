@@ -4,9 +4,9 @@ define([
     'backbone',
     'templating',
     'router',
-    './faqQuestionCollection',
+    'kateshch-faq/admin/models/faqQuestionCollection',
     './editQuestionView',
-    './faqQuestion',
+    'kateshch-faq/admin/models/faqQuestion',
 ], function ($, _, Backbone, templating, Routing, FaqQuestionCollection, EditQuestionView, FaqQuestion) {
     'use strict';
 
@@ -36,13 +36,12 @@ define([
                 that = this;
             model.fetch({
                 success: function () {
-                    this.newQuestionView = new EditQuestionView(
+                    var view  = new EditQuestionView(
                         {
-                            model: new FaqQuestion(),
-                            el: this.$el.find('.new-question')
+                            model: model,
                         });
-                    this.newQuestionView.render();
-                    this.newQuestionView.on('newModel', function () {
+                    view.popup();
+                    view.on('stopEdit', function () {
                         this.model.fetch();
                     }, this);
                 }.bind(this)
@@ -54,27 +53,25 @@ define([
             e.preventDefault();
             var obj = this.$(e.currentTarget),
                 index = obj.data('ordinal');
+
             var model = this.model.at(index);
-            this.editQuestionView[index] = new EditQuestionView(
+            var view = new EditQuestionView(
                 {
                     model: model,
-                    el: this.$el.find('.edit-question-' + index)
                 });
-            this.editQuestionView[index].render();
+            view.on('stopEdit', function () {
+                this.model.fetch();
+            }, this);
+            view.popup();
 
         },
 
         "removeQuest": function (e) {
             e.preventDefault();
             var obj = this.$(e.currentTarget),
-                id = obj.data('id');
-            $.ajax({
-                type: 'put',
-                url: Routing.generate('faq_question_delete', {"question": id}),
-                success: _.bind(function () {
-                    this.model.fetch();
-                }, this)
-            });
+                index = obj.data('ordinal');
+            var model = this.model.at(index);
+            model.destroy();
         },
 
 

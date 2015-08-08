@@ -29,16 +29,12 @@
               <span class="faq-question">{{ item.title }}</span>
             </div>
             <div class="col-md-3">
-              <a data-toggle="collapse" href="#faq{{ i-1 }}" class="edit-category" data-ordinal="{{ i }}"><p>Edit category</p></a>
-
+              <a href="#" class="edit-category" data-ordinal="{{ i }}"><p>Edit category</p></a>
             </div>
             <div class="col-md-2 text-right">
               <a href="" class="remove-category" data-id="{{ item.id }}">Remove category</a>
             </div>
           </div>
-
-
-          <div class="edit-category-{{ i }}"></div>
 
 
         </div>
@@ -47,5 +43,4 @@
   </div>
 </div>
 
-
-
+<div id="popup-edit-category" style="display:none"></div>

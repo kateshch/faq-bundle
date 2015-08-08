@@ -5,17 +5,17 @@
       <div class="panel-options">
         <div class='tabs'>
         <ul class="nav nav-tabs">
-          {% for key in langs %}
+          {% for key, trans in model.translations.models %}
             <li>
-              <a data-view="{{ key }}" class="change-tab" href="#tab-{{ key }}">{{ key }}</a></li>
+              <a data-view="{{ trans.locale }}" class="change-tab" href="#tab-{{ trans.locale }}">{{ trans.locale }}</a></li>
           {% endfor %}
         </ul>
-        {% for key in langs %}
-          {% set transPrefix = 'translations['~(loop.index-1)~']' %}
-          <div id="tab-{{ key }}" class="tab">
-            <textarea name="{{ transPrefix }}.{{ fieldName }}"></textarea>
-          </div>
-        {% endfor %}
+          {% for key, trans in model.translations.models %}
+            {% set transPrefix = "translations["~ key ~"]" %}
+            <div id="tab-{{ trans.locale }}" class="tab">
+              <textarea name="{{ transPrefix }}.{{ fieldName }}"></textarea>
+            </div>
+          {% endfor %}
           </div>
       </div>
     </div>

@@ -2,45 +2,26 @@ define([
     'lodash',
     'backbone',
     './translation',
-    'router',
-], function (_, Backbone, TrModel) {
+    'util/basemodel',
+], function (_, Backbone, TranslationModel, BaseModle) {
     'use strict';
 
+    var Model = Backbone.Collection.extend({
+        "model": TranslationModel,
 
-    var TrCollection = Backbone.Collection.extend({
-        'model': TrModel,
-
-        "initialize": function () {
-
-            var old = this;
-            var newTranslations = [];
-            _.each(window.$langs, _.bind(function (language, el) {
-                var old = this.find(function (obj) {
-                    return obj.get('locale') === language;
-                });
-                if (!old) {
-                    var translation = new TrModel({
-                        "locale": language
-                    });
-                    newTranslations.push(translation);
-                } else {
-                    newTranslations.push(old);
-                }
-            },this));
-            this.reset(newTranslations);
-
-        },
-
-        "findIndex": function(lang){
-            var model = this.find(function (obj) {
-                return obj.get('locale') === lang;
+        findLocale: function (locale, createNew) {
+            var index = _.find(this.toArray(), function (model) {
+                return model.get('locale') === locale;
             });
-            return this.indexOf(model);
+            if (index !== undefined) {
+                return index;
+            }
+            if (createNew === undefined || createNew === true) {
+                this.add(new TranslationModel({locale: locale}));
+                return this.findLocale(locale, false);
+            }
         }
     });
 
-
-
-
-    return TrCollection;
+    return Model;
 });

@@ -33,13 +33,13 @@ define([
             var model = new FaqCategory();
             model.fetch({
                 success: function () {
-                    this.newCategoryView = new EditCategoryView(
+                    var view  = new EditCategoryView(
                         {
-                            model: new FaqCategory(),
-                            el: this.$el.find('.new-category')
+                            model: model,
                         });
-                    this.newCategoryView.render();
-                    this.newCategoryView.on('newModel', function () {
+                    view.popup();
+                    view.on('stopEdit', function () {
+                        console.log(this.model);
                         this.model.fetch();
                     }, this);
                 }.bind(this)
@@ -53,26 +53,22 @@ define([
             var obj = this.$(e.currentTarget),
                 index = obj.data('ordinal');
             var model = this.model.at(index);
-            this.editCategoryView = new EditCategoryView(
+            var view = new EditCategoryView(
                 {
                     model: model,
-                    el: this.$el.find('.edit-category-' + index)
                 });
-            this.editCategoryView.render();
-
+            view.on('stopEdit', function () {
+                this.model.fetch();
+            }, this);
+            view.popup();
         },
 
         "removeQuest": function (e) {
             e.preventDefault();
             var obj = this.$(e.currentTarget),
-                id = obj.data('id');
-            $.ajax({
-                type: 'put',
-                url: Routing.generate('faq_delete_category', {"category": id}),
-                success: _.bind(function () {
-                    this.model.fetch();
-                }, this)
-            });
+                index = obj.data('ordinal');
+            var model = this.model.at(index);
+            model.destroy();
         },
 
 

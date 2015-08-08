@@ -1,11 +1,11 @@
 define([
     'backbone',
     'router',
-    '../util/basemodel',
+    'util/basemodel',
     './faqAnswer',
     './faqCategory',
-    '../translation/translation',
-    '../translation/translationCollection',
+    'kateshch-faq/translation/translation',
+    'kateshch-faq/translation/translationCollection',
 ], function (Backbone, Routing, BaseModel, AnswerModel, CategoryModel, TrModel, TrCollection) {
     'use strict';
 
