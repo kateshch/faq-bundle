@@ -40,7 +40,6 @@ class FaqQuestion
     /**
      * @Serializer\Type("array< Kateshch\FaqBundle\Entity\FaqQuestionTranslation>")
      * @Serializer\Accessor(getter="getATranslations", setter="setATranslations")
-     * @Assert\Valid
      */
     protected $translations;
 

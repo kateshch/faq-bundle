@@ -25,8 +25,8 @@ define([
         },
 
         "events": {
-            "click .add-question": 'newQuest',
-            "click .edit-question": 'editQuest',
+            "click .add-question":    'newQuest',
+            "click .edit-question":   'editQuest',
             "click .remove-question": 'removeQuest'
         },
 
@@ -36,7 +36,7 @@ define([
                 that = this;
             model.fetch({
                 success: function () {
-                    var view  = new EditQuestionView(
+                    var view = new EditQuestionView(
                         {
                             model: model,
                         });
@@ -69,9 +69,15 @@ define([
         "removeQuest": function (e) {
             e.preventDefault();
             var obj = this.$(e.currentTarget),
-                index = obj.data('ordinal');
+                index = obj.data('ordinal'),
+                view = this;
             var model = this.model.at(index);
-            model.destroy();
+            model.destroy(
+                {
+                    success: function () {
+                        view.model.fetch();
+                    }
+                });
         },
 
 

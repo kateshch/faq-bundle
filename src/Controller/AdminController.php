@@ -205,11 +205,13 @@ class AdminController
      *   description="Редактирует вопрос"
      * )
      * @Rest\Put("/api/question/{question}", defaults={"_format": "json"})
-     * @ParamConverter("question", converter="fos_rest.request_body")
+     * @ParamConverter("question", class="Kateshch\FaqBundle\Entity\FaqQuestion", converter="fos_rest.request_body")
      * @Rest\View()
      */
     public function editQuestionAction(FaqQuestion $question, Request $request)
     {
+
+        $this->editTranslationQuestionAction($question,$request);
         $this->manager->persist($question);
         $this->manager->flush();
         return $question;
@@ -243,6 +245,24 @@ class AdminController
         $this->manager->flush();
         return $question;
     }
+
+
+    public function editTranslationQuestionAction(FaqQuestion $question, Request $request)
+    {
+        $translations = $request->get('translations');
+        $answerTranslations = $request->get('answer')['translations'];
+        foreach($translations as $translation){
+            $question->translate($translation['locale'])
+                ->setMessage($translation['message']);
+        };
+        foreach($answerTranslations as $translation){
+            $question->getAnswer()->translate($translation['locale'])
+                ->setMessage($translation['message']);
+        };
+        $question->getAnswer()->mergeNewTranslations();
+    }
+
+
 }
 
 

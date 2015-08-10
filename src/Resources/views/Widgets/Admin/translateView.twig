@@ -13,7 +13,7 @@
           {% for key, trans in model.translations.models %}
             {% set transPrefix = "translations["~ key ~"]" %}
             <div id="tab-{{ trans.locale }}" class="tab">
-              <textarea name="{{ transPrefix }}.{{ fieldName }}"></textarea>
+              <textarea name="{{ transPrefix }}.{{ fieldName }}" cols="5"style="margin: 0;width: 347px;height: 43px;"></textarea>
             </div>
           {% endfor %}
           </div>

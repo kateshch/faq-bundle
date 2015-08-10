@@ -6,13 +6,14 @@
           <ul class="nav nav-tabs">
             {% for key, trans in model.translations.models %}
               <li>
-                <a data-view="{{ trans.locale }}" class="change-tab" href="#tab-{{ trans.locale }}">{{ trans.locale }}</a></li>
+                <a data-view="{{ trans.locale }}" class="change-tab" href="#tab-{{ trans.locale }}">{{ trans.locale }}</a>
+              </li>
             {% endfor %}
           </ul>
           {% for key, trans in model.translations.models %}
             {% set transPrefix = 'translations['~ key ~']' %}
             <div id="tab-{{ trans.locale }}" class="tab">
-              <textarea name="{{ field }}.{{ transPrefix }}.{{ fieldName }}"></textarea>
+              <textarea class="{{ field }}-textarea" name="{{ field }}.{{ transPrefix }}.{{ fieldName }}" rows="5" style="margin: 0;width: 347px;"></textarea>
             </div>
           {% endfor %}
         </div>
