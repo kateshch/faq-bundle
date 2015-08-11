@@ -76,7 +76,6 @@ define([
                 }, this),
             });
 
-св м
             this.modelBinder.bind(this.model, this.el, bindings);
             this.$('textarea.answer-textarea').each(function (ind, el) {
                 view.addWysiwyg(el);
