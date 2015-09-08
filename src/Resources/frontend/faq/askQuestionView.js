@@ -18,7 +18,7 @@ define([
             this.modelBinder = new Backbone.ModelBinder();
             this.model.set('errors', null);
             this.model.on('change:errors', this.render, this);
-            this.langIndex = this.model.get('translations').findIndex(window.$lang);
+            this.langIndex = this.model.get('translations').findLocale(window.$lang);
         },
 
         "events": {
@@ -35,7 +35,7 @@ define([
                         });
                     }
 
-                }
+                }cd
             });
         },
 
