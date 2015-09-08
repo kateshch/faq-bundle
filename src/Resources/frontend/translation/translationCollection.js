@@ -14,7 +14,7 @@ define([
                 return model.get('locale') === locale;
             });
             if (index !== undefined) {
-                return index;
+                return _.indexOf(this.toArray(),index);
             }
             if (createNew === undefined || createNew === true) {
                 this.add(new TranslationModel({locale: locale}));
