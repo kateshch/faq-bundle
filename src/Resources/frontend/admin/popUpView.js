@@ -4,7 +4,6 @@ define([
     'backbone',
     'templating',
     'jquery.fancybox',
-    'css!jquery.fancybox'
 ], function ($, _, Backbone, templating) {
     'use strict';
 

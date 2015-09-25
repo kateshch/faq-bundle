@@ -1,20 +1,20 @@
 {
-  "name": "kateshch-faq",
-  "version": "1.0.0",
-  "authors": [
-    "Kate Shcherbak <katescherbak@gmail.com>"
-  ],
-  "moduleType": [
-    "amd"
-  ],
-  "main": "bower.json",
-  "dependencies": {
-    "underscore.string": "*",
-    "backbone.chaining": "*",
-    "jquery.fancybox": "*"
-  },
-  "license": "proprietary",
-  "ignore": [
-    "**/*"
-  ]
+    "name":         "kateshch-faq",
+    "version":      "1.0.0",
+    "authors":      [
+        "Kate Shcherbak <katescherbak@gmail.com>"
+    ],
+    "moduleType":   [
+        "amd"
+    ],
+    "main":         "bower.json",
+    "dependencies": {
+        "underscore.string": "*",
+        "backbone.chaining": "*",
+        "jquery.fancybox":   "*"
+    },
+    "license":      "proprietary",
+    "ignore":       [
+        "**/*"
+    ]
 }
