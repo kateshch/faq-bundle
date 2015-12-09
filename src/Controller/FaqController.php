@@ -48,21 +48,21 @@ class FaqController
      */
     private $repoFile;
 
-    // -- Action ---------------------------------------
-    /**
-     * @ApiDoc(
-     *   description="Список категорий c вопросами"
-     * )
-     * @Rest\Get("/", name="faq_index")
-     * @Rest\View()
-     */
-    public function listAction()
-    {
-        return [];
-    }
+//    // -- Action ---------------------------------------
+//    /**
+//     * @ApiDoc(
+//     *   description="Список категорий c вопросами"
+//     * )
+//     * @Rest\Get("/", name="faq_index")
+//     * @Rest\View()
+//     */
+//    public function listAction()
+//    {
+//        return [];
+//    }
 
     /**
-     * @Rest\Get("/category", name="faq_categories" ,defaults={"_format": "json"})
+     * @Rest\Get("/api/categories", name="faq_categories" ,defaults={"_format": "json"})
      * @Rest\View()
      */
     public function listCategoryAction()
@@ -71,11 +71,22 @@ class FaqController
         return $categories;
     }
 
+
+    /**
+     * @Rest\Get("/api/category/{category}", name="faq_category" ,defaults={"_format": "json"})
+     * @Rest\View()
+     */
+    public function categoryAction($category)
+    {
+        $category = $this->repoFaqCategory->findOneBy(['class'=>$category]);
+        return $category;
+    }
+
     /**
      * @ApiDoc(
      *   description="Список вопросов с ответами"
      * )
-     * @Rest\Get("/questions", name="faq_questions", defaults={"_format": "json"})
+     * @Rest\Get("/api/questions", name="faq_questions", defaults={"_format": "json"})
      * @Rest\View()
      */
     public function listQuestionsAction()
@@ -90,7 +101,7 @@ class FaqController
      *   description="Добавляет вопрос",
      *   input="\Kateshch\FaqBundle\Entity\FaqQuestion"
      * )
-     * @Rest\Post("/question/new", name="faq_new_question", defaults={"_format": "json"})
+     * @Rest\Post("/api/question/new", name="faq_new_question", defaults={"_format": "json"})
      * @ParamConverter("faqQuestion", class="Kateshch\FaqBundle\Entity\FaqQuestion", converter="fos_rest.request_body")
      * @Rest\View()
      * @param FaqQuestion $faqQuestion
@@ -115,7 +126,7 @@ class FaqController
      * @ApiDoc(
      *   description="Ставит оценку",
      * )
-     * @Rest\Put("/addmark/{question}/{mark}", name="faq_add_mark", defaults={"_format": "json"})
+     * @Rest\Put("/api/addmark/{question}/{mark}", name="faq_add_mark", defaults={"_format": "json"})
      * @Rest\View()
      */
     public function addMarkAction(FaqQuestion $question, $mark)
