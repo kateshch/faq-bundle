@@ -1,0 +1,21 @@
+<div class="wrapper wrapper-content animated fadeInRight col-lg-4">
+    <a href="#" class="new-question"><i class="fa fa-plus">Добавить вопрос</i></a>
+
+
+    {% for i,item in questions %}
+        <div class="row">
+                <a><span>{{ item.message }}</a></span>
+
+                <a class="edit-question" data-id="{{ item.id }}"
+                   href="#">
+                    <i class="fa fa-wrench"></i>
+                </a>
+                <a class="remove-question" data-id="{{ item.id }}">
+                    <i class="fa fa-times"></i>
+                </a>
+        </div>
+    {% endfor %}
+</div>
+
+<div class="col-sm-8 container-edit">
+</div>

@@ -20,53 +20,28 @@ class KateshchFaqExtension extends Extension
     /**
      * {@inheritdoc}
      */
-    public function load(
-        array $configs,
-        ContainerBuilder $container
-    ) {
+    public function load(array $configs, ContainerBuilder $container)
+    {
         $configDir = realpath(__DIR__ . '/../Resources/config');
-
-        $processor = new Processor();
-        $config = $processor->processConfiguration(
-            new Configuration($this->getAlias()),
-            $configs
-        );
-
         $container->setParameter(
-            $this->getAlias(),
-            $config
+            $this->getAlias() . '.scripts_dir',
+            realpath(__DIR__ . '/../Resources/scripts')
+        );
+        $container->setParameter(
+            $this->getAlias() . '.data',
+            realpath(__DIR__ . '/../Resources/config/data')
         );
 
-        $config['scriptsdir'] = __DIR__ . '/../Resources/scripts';
 
         $container->setParameter(
             $this->getAlias() . '.config_directory',
             $configDir
         );
-
-        $container->setParameter(
-            $this->getAlias() . '.jsmodeldir',
-            realpath(__DIR__ . '/../Resources/scripts/jsmodel')
-        );
-
         $loader = new YamlFileLoader(
             $container,
-            new FileLocator(__DIR__ . '/../Resources/config')
+            new FileLocator($configDir)
         );
         $loader->load('services.yml');
         $loader->load('doctrine.yml');
-
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getConfiguration(array $config, ContainerBuilder $container)
-    {
-        $config = new Configuration($this->getAlias());
-        $r = new \ReflectionClass($config);
-        $container->addResource(new FileResource($r->getFileName()));
-        return $config;
-    }
-
 }

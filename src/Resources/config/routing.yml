@@ -1,6 +1,5 @@
 faq:
     resource: "@KateshchFaqBundle/Controller"
     type: annotation
-    prefix: /faq
     options:
       expose: true

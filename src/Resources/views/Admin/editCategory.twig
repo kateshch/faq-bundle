@@ -1,0 +1,31 @@
+<div role="form">
+    <div class="col-sm-9">
+        {% for i,language in languages %}
+            {% set transPrefix = 'translations['~(i)~']' %}
+            <div class="col-sm-3">
+                <h3>{{ language }}</h3>
+
+                <div class="input-row">
+                    <label for="{{ id() }}" class="required">Название</label>
+
+                    <div class="input-holder">
+                        <input type="text" id="{{ id() }}" name="{{ transPrefix }}.title">
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="col-sm-9">
+        <div class="form-group"><label class="col-sm-2 control-label">Class</label>
+
+            <div class="col-sm-10">
+                <input name="class" placeholder="Type your message here">
+            </div>
+        </div>
+
+
+    </div>
+    <button class="btn btn-white cancel">Cancel</button>
+    <button type="submit" class="btn btn-primary save-category">Save</button>
+</div>
+

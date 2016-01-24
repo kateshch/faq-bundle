@@ -1,17 +1,22 @@
-{% extends '@KateshchFaq/layout.twig' %}
+<div class="col-lg-2 list-categories">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <a href="{{ path(newPath) }}"><i class="fa fa-plus">Добавить категорию</i></a>
 
+        {% for i,item in categories %}
+            <div class="row">
+                    <a href="{{ path(showPath, {'category': item.id}) }}" class="show-category" data-id="{{ item.id }}"><span>{{ item.title }}
+                   </span> </a>
+                    <a class="edit-category" data-id="{{ item.id }}"
+                       href="{{ path(editPath, {'category': item.id}) }}">
+                        <i class="fa fa-wrench"></i>
+                    </a>
+                    <a class="remove-category" data-id="{{ item.id }}">
+                        <i class="fa fa-times"></i>
+                    </a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+<div class="col-lg-10 list-questions">
 
-{% twigjs '@KateshchFaq/Widgets/Admin/indexView.twig' %}
-
-{% twigjs '@KateshchFaq/Widgets/Admin/listQuestions.twig' %}
-{% twigjs '@KateshchFaq/Widgets/Admin/editQuestion.twig' %}
-
-{% twigjs '@KateshchFaq/Widgets/Admin/listCategories.twig' %}
-{% twigjs '@KateshchFaq/Widgets/Admin/editCategory.twig' %}
-
-{% block page %}
-
-  <div class="content">
-
-  </div>
-{% endblock %}
+</div>

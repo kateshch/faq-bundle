@@ -33,7 +33,6 @@ class FaqQuestion
      */
     public function __construct()
     {
-        $this->setAnswer(new FaqAnswer());
         $this->setCategory(new FaqCategory());
     }
 

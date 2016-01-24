@@ -1,0 +1,41 @@
+<div class="col-sm-15">
+    {% for language in languages %}
+        {% set questionTransPrefix = 'translations['~(model.translations.findLocale(language))~']' %}
+        {% set answerTransPrefix = 'translations['~(model.answer.translations.findLocale(language, true))~']' %}
+        <div class="col-sm-5">
+            <h3>{{ language }}</h3>
+
+            <div class="input-row">
+                <label for="{{ id() }}" class="required">Вопрос</label>
+
+                <div class="input-holder">
+                        <textarea rows="5" cols="15" id="{{ id() }}"
+                                  name="{{ questionTransPrefix }}.message"></textarea>
+                </div>
+            </div>
+
+            <div class="input-row">
+                <label for="{{ id() }}" class="required">Ответ</label>
+
+                <div class="input-holder">
+                        <textarea rows="5" cols="15" id="{{ id() }}"
+                                  name="answer.{{ answerTransPrefix }}.message"></textarea>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    <div class="col-sm-5">
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <button class=" btn-white cancel">Cancel</button>
+        <button type="submit" class="btn-primary save-question">Save</button>
+    </div>
+</div>
+
+</div>
+
+
+

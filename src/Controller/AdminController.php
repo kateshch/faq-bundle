@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @author Kate Shcherbak <katescherbak@gmail.com>
  *
- * @Rest\Route("/edit")
+ * @Rest\Route("/admin/faq-bundle")
  */
 class AdminController
 {
@@ -53,7 +53,7 @@ class AdminController
     }
 
     /**
-     * @Rest\Get("/category", name="faq_admin_categories" ,defaults={"_format": "json"})
+     * @Rest\Get("/categories.json", name="faq_bundle.admin_categories" ,defaults={"_format": "json"})
      * @Rest\View()
      */
     public function listCategoryAction()
@@ -63,7 +63,7 @@ class AdminController
     }
 
     /**
-     * @Rest\Get("/questions", name="faq_admin_questions",defaults={"_format": "json"})
+     * @Rest\Get("/questions.json", name="faq_bundle.admin_questions",defaults={"_format": "json"})
      * @Rest\View()
      */
     public function listQuestionsAction()
@@ -72,25 +72,18 @@ class AdminController
         return $questions;
     }
 
-    /**
-     * @Rest\Get("/answer/new/{question}", name="faq_answer_new", defaults={"_format": "json"})
-     * @Rest\View()
-     */
-    public function newAnswerAction()
-    {
-        return new FaqAnswer();
-    }
 
     /**
      * @ApiDoc(
      *   description="Добавляет ответ"
      * )
-     * @Rest\Post("/answer/new/{question}", name="faq_save_answer", defaults={"_format": "json"})
+     * @Rest\Post("/answer/api", name="faq_bundle.save_answer", defaults={"_format": "json"})
      * @ParamConverter("faqAnswer", class="Kateshch\FaqBundle\Entity\FaqAnswer", converter="fos_rest.request_body")
      * @Rest\View()
      */
-    public function saveAnswerAction(FaqAnswer $faqAnswer, FaqQuestion $question, Request $request)
+    public function saveAnswerAction(FaqAnswer $faqAnswer, Request $request)
     {
+        $question = $faqAnswer->getQuestion();
         $question->setAnswer($faqAnswer);
         $this->manager->persist($question);
         $this->manager->flush();
@@ -101,32 +94,24 @@ class AdminController
      * @ApiDoc(
      *   description="Удаляет ответ"
      * )
-     * @Rest\Put("/answer/delete/{question}", name="faq_delete_answer", defaults={"_format": "json"})
+     * @Rest\Put("/answer/api", name="faq_bundle.delete_answer", defaults={"_format": "json"})
      * @Rest\View()
      */
-    public function deleteAnswerAction(FaqQuestion $question, Request $request)
+    public function deleteAnswerAction(FaqAnswer $answer, Request $request)
     {
-        $answer = $question->getAnswer();
+        $question = $answer->getQuestion();
         $question->setAnswer(null);
         $this->manager->remove($answer);
         $this->manager->flush();
         return $question;
     }
 
-    /**
-     * @Rest\Get("/api/category", name="faq_category_api", defaults={"_format": "json"})
-     * @Rest\View()
-     */
-    public function newCategoryAction()
-    {
-        return new FaqCategory();
-    }
 
     /**
      * @ApiDoc(
      *   description="Добавление категории"
      * )
-     * @Rest\Post("/api/category", defaults={"_format": "json"})
+     * @Rest\Post("/category/api", name="faq_bundle.category_api", defaults={"_format": "json"})
      * @ParamConverter("faqCategory", class="Kateshch\FaqBundle\Entity\FaqCategory", converter="fos_rest.request_body")
      * @Rest\View()
      */
@@ -139,9 +124,9 @@ class AdminController
 
     /**
      * @ApiDoc(
-     *   description="Получение кактегории"
+     *   description="Получение категории"
      * )
-     * @Rest\Get("/api/category/{category}", defaults={"_format": "json"})
+     * @Rest\Get("/category/api/{category}", defaults={"_format": "json"})
      * @Rest\View()
      */
     public function getCategoryAction(FaqCategory $category, Request $request)
@@ -153,7 +138,7 @@ class AdminController
      * @ApiDoc(
      *   description="Редактирование категории"
      * )
-     * @Rest\Put("/api/category/{category}", defaults={"_format": "json"})
+     * @Rest\Put("/category/api/{category}", defaults={"_format": "json"})
      * @ParamConverter("faqCategory", class="Kateshch\FaqBundle\Entity\FaqCategory", converter="fos_rest.request_body")
      * @Rest\View()
      */
@@ -168,23 +153,31 @@ class AdminController
      * @ApiDoc(
      *   description="Удаление категории"
      * )
-     * @Rest\Delete("/api/category/{category}", defaults={"_format": "json"})
+     * @Rest\Delete("/category/api/{category}", defaults={"_format": "json"})
      * @Rest\View()
      */
     public function deleteCategoryAction(FaqCategory $category, Request $request)
     {
+
         $this->manager->remove($category);
         $this->manager->flush();
         return $category;
     }
 
+
     /**
-     * @Rest\Get("/api/question", name="faq_question_api", defaults={"_format": "json"})
+     * @ApiDoc(
+     *   description="Новый вопрос"
+     * )
+     * @Rest\Post("/question/api", name="faq_bundle.question_api", defaults={"_format": "json"})
+     * @ParamConverter("faqQuestion", class="Kateshch\FaqBundle\Entity\FaqQuestion", converter="fos_rest.request_body")
      * @Rest\View()
      */
-    public function newQuestionAction()
+    public function saveQuestionAction(FaqQuestion $faqQuestion, Request $request)
     {
-        return new FaqQuestion();
+        $this->manager->persist($faqQuestion);
+        $this->manager->flush();
+        return $faqQuestion;
     }
 
 
@@ -192,7 +185,7 @@ class AdminController
      * @ApiDoc(
      *   description="Редактирует вопрос"
      * )
-     * @Rest\Get("/api/question/{question}", defaults={"_format": "json"})
+     * @Rest\Get("/question/api/{question}", defaults={"_format": "json"})
      * @Rest\View()
      */
     public function getQuestionAction(FaqQuestion $question, Request $request)
@@ -204,39 +197,23 @@ class AdminController
      * @ApiDoc(
      *   description="Редактирует вопрос"
      * )
-     * @Rest\Put("/api/question/{question}", defaults={"_format": "json"})
+     * @Rest\Put("/question/api/{question}", defaults={"_format": "json"})
      * @ParamConverter("question", class="Kateshch\FaqBundle\Entity\FaqQuestion", converter="fos_rest.request_body")
      * @Rest\View()
      */
     public function editQuestionAction(FaqQuestion $question, Request $request)
     {
-
-        $this->editTranslationQuestionAction($question,$request);
-        $this->manager->persist($question);
+        $this->editTranslationQuestionAction($question, $request);
         $this->manager->flush();
         return $question;
     }
 
-    /**
-     * @ApiDoc(
-     *   description="Новый вопрос"
-     * )
-     * @Rest\Post("/api/question", defaults={"_format": "json"})
-     * @ParamConverter("faqQuestion", class="Kateshch\FaqBundle\Entity\FaqQuestion", converter="fos_rest.request_body")
-     * @Rest\View()
-     */
-    public function saveQuestionAction(FaqQuestion $faqQuestion, Request $request)
-    {
-        $this->manager->persist($faqQuestion);
-        $this->manager->flush();
-        return $faqQuestion;
-    }
 
     /**
      * @ApiDoc(
      *   description="Удаление вопроса"
      * )
-     * @Rest\Delete("/api/question/{question}",  defaults={"_format": "json"})
+     * @Rest\Delete("/question/api/{question}",  defaults={"_format": "json"})
      * @Rest\View()
      */
     public function deleteQuestionAction(FaqQuestion $question, Request $request)
@@ -251,11 +228,11 @@ class AdminController
     {
         $translations = $request->get('translations');
         $answerTranslations = $request->get('answer')['translations'];
-        foreach($translations as $translation){
+        foreach ($translations as $translation) {
             $question->translate($translation['locale'])
                 ->setMessage($translation['message']);
         };
-        foreach($answerTranslations as $translation){
+        foreach ($answerTranslations as $translation) {
             $question->getAnswer()->translate($translation['locale'])
                 ->setMessage($translation['message']);
         };
