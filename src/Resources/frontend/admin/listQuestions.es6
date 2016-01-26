@@ -13,8 +13,6 @@ export default class extends Backbone.View {
     render() {
         this.$el.html(this.template({
             questions: this.category.get('questions').toArray(),
-            editPath: this.editPath,
-            newPath: this.newPath
         }));
         this.delegateEvents();
         return this;
@@ -22,8 +20,6 @@ export default class extends Backbone.View {
 
     initialize(options) {
         this.category = options.category;
-        this.editPath = options.editQuestionPath;
-        this.newPath = options.newQuestionPath;
     }
 
 

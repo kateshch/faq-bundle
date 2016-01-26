@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @author Kate Shcherbak <katescherbak@gmail.com>
  *
- * @Rest\Route("/admin/faq-bundle")
+ * @Rest\Route("/admin/faq")
  */
 class AdminController
 {
@@ -38,18 +38,15 @@ class AdminController
      */
     private $repoFaqCategory;
 
-
-    // -- Action ---------------------------------------
     /**
-     * @ApiDoc(
-     *   description="Главная админка"
-     * )
-     * @Rest\Get("", name="faq_admin_index")
-     * @Rest\View()
+     * @Rest\Get("", name="faq_bundle_admin.faq")
+     * @Rest\Get("#edit/category/{category}", name="faq_bundle_admin.edit_faq_category_view")
+     * @Rest\Get("#new/category", name="faq_bundle_admin.new_faq_category_view")
+     * @Rest\Get("/{category}", name="faq_bundle_admin.faq_category_show")
+     * @Rest\View("@KateshchFaq/entrypoint.twig")
      */
     public function indexAction()
     {
-        [];
     }
 
     /**

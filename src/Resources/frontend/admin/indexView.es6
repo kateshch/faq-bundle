@@ -23,8 +23,6 @@ export default class extends Backbone.View {
         $.when(model.fetch()).done(()=> {
             this.listView = new ListQuestionView({
                 category: model,
-                editQuestionPath: this.editQuestionPath,
-                newQuestionPath: this.newQuestionPath
             });
             defer.resolve();
         });
@@ -40,9 +38,6 @@ export default class extends Backbone.View {
     render() {
         this.$el.html(this.template({
             categories: this.collection.toArray(),
-            editPath: this.editCategoryPath,
-            newPath: this.newCategoryPath,
-            showPath: this.showCategoryPath
         }));
 
         if (this.listView) {
