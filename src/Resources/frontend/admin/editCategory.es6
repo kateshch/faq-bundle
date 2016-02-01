@@ -72,7 +72,7 @@ export default class extends View {
                 event.preventDefault();
                 this.model.save({
                     success: (response)=> {
-                        console.log(response);
+                        alert('Категория успешно сохранена!')
                     }
                 });
 

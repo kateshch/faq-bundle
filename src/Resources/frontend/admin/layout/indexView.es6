@@ -1,7 +1,7 @@
 'use strict';
 import {View, Radio} from 'backbone';
 import AppRouter from 'app/router';
-import template from 'bankstandard-admin/layout/index.twig';
+import template from 'kateshch-faq/layout/index.twig';
 import MenuView from './menuView';
 import $ from 'jquery';
 import _ from 'lodash';

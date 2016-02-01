@@ -12,7 +12,6 @@ import Q from 'q';
 @asyncView()
 export default class extends View {
   startAction() {
-    console.log('gd');
     return this.render();
   }
 

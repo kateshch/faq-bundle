@@ -11,7 +11,6 @@ export default class extends View {
     initialize(option) {
         this.category = option.category;
         this.model = option.model ? option.model : new QuestionModel({category: this.category});
-        console.log(this.model);
         this.modelBinder = new Backbone.ModelBinder();
     }
 
@@ -41,7 +40,7 @@ export default class extends View {
                 event.preventDefault();
                 this.model.save({}, {
                     success: (response)=> {
-                        console.log(response);
+                        alert('Вопрос успешно сохранена!')
                     }
                 });
 
