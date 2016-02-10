@@ -59,7 +59,7 @@ export default class extends Backbone.View {
 
 
         };
-    }
+    };
 
 }
 

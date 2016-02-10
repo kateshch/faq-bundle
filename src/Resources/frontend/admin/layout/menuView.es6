@@ -1,6 +1,6 @@
 'use strict';
 import {View} from 'backbone';
-import template from 'bankstandard-admin/layout/menuView.twig';
+import template from 'kateshch-faq/layout/menuView.twig';
 import Router from 'router';
 import location from 'location';
 import _ from 'lodash';
@@ -28,7 +28,7 @@ export default class extends View {
 
   get menu() {
     return [
-      {title: 'Вопросы и ответы', href: Router.generate('bank_admin.faq'), icon: 'dashboard'}
+      {title: 'Вопросы и ответы', href: Router.generate('faq_bundle_admin.faq'), icon: 'dashboard'}
     ];
 
   }

@@ -150,8 +150,8 @@ export default class extends View {
 
     @property
     static routes = {
-        '': 'kateshch-faq/faq/indexView:index',
-        ':category': 'kateshch-faq/faq/indexView:show'
+        'admin/faq': 'kateshch-faq/admin/indexView:index',
+        'admin/faq:category': 'kateshch-faq/admin/indexView:show'
     };
 
     @property
