@@ -107,8 +107,15 @@ class FaqController
      *   input="\Kateshch\FaqBundle\Entity\FaqQuestion"
      * )
      * @Rest\Post("/question/new", name="faq_new_question", defaults={"_format": "json"})
-     * @ParamConverter("faqQuestion", class="Kateshch\FaqBundle\Entity\FaqQuestion", converter="fos_rest.request_body")
-     * @Rest\View()
+     * @ParamConverter("faqQuestion", class="Kateshch\FaqBundle\Entity\FaqQuestion", converter="fos_rest.request_body",
+     *     options={
+     *          "deserializationContext"={
+     *              "groups"={
+     *                  "edit","Default"
+     *              }
+     *          }
+     *      })
+     * @Rest\View(serializerGroups={"Default", "edit"})
      * @param FaqQuestion $faqQuestion
      * @param ConstraintViolationListInterface $validationErrors
      * @return FaqQuestion
@@ -132,7 +139,7 @@ class FaqController
      *   description="Ставит оценку",
      * )
      * @Rest\Put("/addmark/{question}/{mark}", name="faq_add_mark", defaults={"_format": "json"})
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"Default", "edit", "mark"})
      */
     public function addMarkAction(FaqQuestion $question, $mark)
     {

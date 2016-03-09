@@ -30,6 +30,7 @@ class FaqAnswer
 
     /**
      * @Serializer\Type("array< Kateshch\FaqBundle\Entity\FaqAnswerTranslation>")
+     * @Serializer\Groups({"=read or g('create') or g('edit')"})
      * @Serializer\Accessor(getter="getATranslations", setter="setATranslations")
      */
     protected $translations;
@@ -37,6 +38,7 @@ class FaqAnswer
     /**
      * @Serializer\Accessor(getter="getMessage")
      * @Serializer\Type("string")
+     * @Serializer\Groups({"=read"})
      */
     private $message;
 
@@ -46,6 +48,7 @@ class FaqAnswer
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Serializer\Groups({"=read"})
      * @var integer
      */
     protected $id;

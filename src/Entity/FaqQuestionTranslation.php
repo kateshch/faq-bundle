@@ -69,6 +69,9 @@ class FaqQuestionTranslation
         return $this;
     }
 
-
+    public function isEmpty()
+    {
+        return !$this->message;
+    }
 
 }

@@ -45,7 +45,6 @@ class AdminController extends Controller
     private $repoFaqCategory;
 
 
-
     // -- Action ---------------------------------------
     /**
      * @ApiDoc(
@@ -71,7 +70,7 @@ class AdminController extends Controller
 
     /**
      * @Rest\Get("/questions", name="faq_admin_questions",defaults={"_format": "json"})
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"Default", "edit"})
      */
     public function listQuestionsAction()
     {
@@ -81,7 +80,7 @@ class AdminController extends Controller
 
     /**
      * @Rest\Get("/answer/new/{question}", name="faq_answer_new", defaults={"_format": "json"})
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"Default", "edit"})
      */
     public function newAnswerAction()
     {
@@ -93,8 +92,15 @@ class AdminController extends Controller
      *   description="Добавляет ответ"
      * )
      * @Rest\Post("/answer/new/{question}", name="faq_save_answer", defaults={"_format": "json"})
-     * @ParamConverter("faqAnswer", class="Kateshch\FaqBundle\Entity\FaqAnswer", converter="fos_rest.request_body")
-     * @Rest\View()
+     * @ParamConverter("faqAnswer", class="Kateshch\FaqBundle\Entity\FaqAnswer", converter="fos_rest.request_body",
+     *     options={
+     *          "deserializationContext"={
+     *              "groups"={
+     *                  "edit","Default"
+     *              }
+     *          }
+     *      })
+     * @Rest\View(serializerGroups={"Default", "edit"})
      */
     public function saveAnswerAction(FaqAnswer $faqAnswer, FaqQuestion $question, Request $request)
     {
@@ -109,7 +115,7 @@ class AdminController extends Controller
      *   description="Удаляет ответ"
      * )
      * @Rest\Put("/answer/delete/{question}", name="faq_delete_answer", defaults={"_format": "json"})
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"Default", "edit"})
      */
     public function deleteAnswerAction(FaqQuestion $question, Request $request)
     {
@@ -187,7 +193,7 @@ class AdminController extends Controller
 
     /**
      * @Rest\Get("/api/question", name="faq_question_api", defaults={"_format": "json"})
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"Default", "create"})
      */
     public function newQuestionAction()
     {
@@ -200,7 +206,7 @@ class AdminController extends Controller
      *   description="Редактирует вопрос"
      * )
      * @Rest\Get("/api/question/{question}", defaults={"_format": "json"})
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"Default", "edit"})
      */
     public function getQuestionAction(FaqQuestion $question, Request $request)
     {
@@ -212,14 +218,24 @@ class AdminController extends Controller
      *   description="Редактирует вопрос"
      * )
      * @Rest\Put("/api/question/{question}", defaults={"_format": "json"})
-     * @ParamConverter("faqQuestion", class="Kateshch\FaqBundle\Entity\FaqQuestion", converter="fos_rest.request_body")
-     * @Rest\View()
+     * @ParamConverter("question", class="Kateshch\FaqBundle\Entity\FaqQuestion", converter="fos_rest.request_body",
+     *     options={
+     *          "deserializationContext"={
+     *              "groups"={
+     *                  "edit","Default"
+     *              }
+     *          }
+     *      })
+     * @Rest\View(serializerGroups={"Default", "edit"})
+     * @param FaqQuestion                      $question
+     * @return FaqQuestion
+     * @internal param Request $request
      */
-    public function editQuestionAction(FaqQuestion $faqQuestion, Request $request)
+    public function editQuestionAction(FaqQuestion $question, Request $request)
     {
-        $this->manager->persist($faqQuestion);
+        $this->manager->persist($question);
         $this->manager->flush();
-        return $faqQuestion;
+        return $question;
     }
 
     /**
@@ -227,8 +243,15 @@ class AdminController extends Controller
      *   description="Новый вопрос"
      * )
      * @Rest\Post("/api/question", defaults={"_format": "json"})
-     * @ParamConverter("faqQuestion", class="Kateshch\FaqBundle\Entity\FaqQuestion", converter="fos_rest.request_body")
-     * @Rest\View()
+     * @ParamConverter("faqQuestion", class="Kateshch\FaqBundle\Entity\FaqQuestion", converter="fos_rest.request_body",
+     *     options={
+     *          "deserializationContext"={
+     *              "groups"={
+     *                  "edit","Default"
+     *              }
+     *          }
+     *      })
+     * @Rest\View(serializerGroups={"Default", "edit"})
      */
     public function saveQuestionAction(FaqQuestion $faqQuestion, Request $request)
     {
@@ -242,7 +265,7 @@ class AdminController extends Controller
      *   description="Удаление вопроса"
      * )
      * @Rest\Put("/api/question/delete/{question}", name="faq_question_delete", defaults={"_format": "json"})
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"Default", "edit"})
      */
     public function deleteQuestionAction(FaqQuestion $question, Request $request)
     {

@@ -3,6 +3,8 @@ namespace Kateshch\FaqBundle\Entity;
 
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Iwin\Bundle\SharedBundle\Service\Validation\ConstraintTranslations;
+use Iwin\Bundle\SharedBundle\Service\Validation\ConstraintTranslationsCreatefree;
 use Knp\DoctrineBehaviors\Model\Timestampable\Timestampable;
 use Werkint\Bundle\FrameworkExtraBundle\Model\Translatable;
 use JMS\Serializer\Annotation as Serializer;
@@ -16,12 +18,14 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="FaqQuestionRepository")
  * @ORM\Table(name="app_faq_questions")
  *
+ * @Serializer\ExclusionPolicy("none")
+ *
  * Переводные методы:
  * @method FaqQuestionTranslation translate(string $lang)
  * @method string getMessage()
  * @method FaqQuestionTranslation setMessage(string $message)
  * @method string getName()
- * @method FaqQuestionTranslation setName(string $message)
+ * @method FaqQuestionTranslation setName(string $name)
  */
 class FaqQuestion
 {
@@ -38,21 +42,25 @@ class FaqQuestion
     }
 
     /**
-     * @Serializer\Type("array< Kateshch\FaqBundle\Entity\FaqQuestionTranslation>")
+     * @Serializer\Type("array <Kateshch\FaqBundle\Entity\FaqQuestionTranslation>")
      * @Serializer\Accessor(getter="getATranslations", setter="setATranslations")
+     * @Serializer\Groups({"=read or g('create') or g('edit')"})
      * @Assert\Valid
+     * @ConstraintTranslations
      */
     protected $translations;
 
     /**
      * @Serializer\Accessor(getter="getName")
      * @Serializer\Type("string")
+     * @Serializer\Groups({"=read"})
      */
     private $name;
 
     /**
      * @Serializer\Accessor(getter="getMessage")
      * @Serializer\Type("string")
+     * @Serializer\Groups({"=read"})
      */
     private $message;
 
@@ -62,6 +70,7 @@ class FaqQuestion
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      * @Serializer\Type("integer")
+     * @Serializer\Groups({"=read"})
      * @var integer
      */
     protected $id;
@@ -69,6 +78,7 @@ class FaqQuestion
     /**
      * @var FaqAnswer|null
      * @Serializer\Type("Kateshch\FaqBundle\Entity\FaqAnswer")
+     * @Serializer\Groups({"=read or g('create') or g('edit')"})
      * @ORM\OneToOne(targetEntity="Kateshch\FaqBundle\Entity\FaqAnswer", cascade={"persist","remove"})
      * @ORM\JoinColumn(name="answer_id", referencedColumnName="id")
      */
@@ -77,6 +87,7 @@ class FaqQuestion
     /**
      * @ORM\Column(type="float", nullable=true)
      * @Serializer\Type("float")
+     * @Serializer\Groups({"=read or g('mark')"})
      * @var float
      */
     protected $mark;
@@ -84,6 +95,7 @@ class FaqQuestion
     /**
      * @var string
      * @Serializer\Type("string")
+     * @Serializer\Groups({"=read"})
      * @ORM\Column(type="string",length=255,nullable=true)
      */
     protected $email;
@@ -91,6 +103,7 @@ class FaqQuestion
     /**
      * @var FaqCategory|null
      * @Serializer\Type("Kateshch\FaqBundle\Entity\FaqCategory")
+     * @Serializer\Groups({"=read or g('create') or g('edit')"})
      * @ORM\ManyToOne(targetEntity="Kateshch\FaqBundle\Entity\FaqCategory", cascade={"persist"})
      * @ORM\JoinColumn(name="ref_category", referencedColumnName="id")
      */
@@ -100,6 +113,7 @@ class FaqQuestion
      * @ORM\OneToOne(targetEntity="Kateshch\FaqBundle\Entity\File", cascade={"persist"})
      * @ORM\JoinColumn(name="file_id", referencedColumnName="id")
      * @Serializer\Type("Kateshch\FaqBundle\Entity\File")
+     * @Serializer\Groups({"=read or g('create') or g('edit')"})
      * @var File|null
      */
     protected $file;
@@ -213,6 +227,7 @@ class FaqQuestion
         $this->file = $file;
         return $this;
     }
+
 
 
 

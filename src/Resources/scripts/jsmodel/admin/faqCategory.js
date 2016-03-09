@@ -1,8 +1,8 @@
 define([
     'backbone',
     '../../util/basemodel',
-    '../translation/translation',
-    '../translation/translationCollection',
+    './translation',
+    './translationCollection',
     './faqQuestion',
     './faqQuestionCollection',
     'routing'

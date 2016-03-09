@@ -39,7 +39,8 @@ define([
                     this.newQuestionView = new EditQuestionView(
                         {
                             model: new FaqQuestion(),
-                            el:    this.$el.find('.new-question')
+                            el:    this.$el.find('.new-question'),
+                            collection: this.model
                         });
                     this.newQuestionView.render();
                     this.newQuestionView.on('newModel', function () {

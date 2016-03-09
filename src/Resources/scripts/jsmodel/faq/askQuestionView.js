@@ -10,9 +10,12 @@ define([
     'use strict';
 
     var viewId = '@KateshchFaq/Widgets/Faq/askQuestion.twig';
+    var langs = window.$langs,
+        langDefault = window.$lang_default;
 
     var View = Backbone.View.extend({
         "template": templating.get(viewId),
+        "langsSelected": langDefault,
 
 
         initialize: function () {
@@ -23,7 +26,8 @@ define([
         },
 
         "events": {
-            "click .save-question": "saveQuestion"
+            "click .save-question": "saveQuestion",
+            "click .tabset a": 'selectTab',
         },
 
         "saveQuestion": function (e) {
@@ -43,10 +47,29 @@ define([
         render: function () {
             this.$el.html(this.template({
                 "model":      this.model,
-                "categories": this.categories
+                "categories": this.categories,
+                "langs":         langs,
+                "langsDef":      langDefault,
+                "langsSelected": this.langsSelected
             }));
 
+            this.$('.not-cyrillic').on('keyup', function (event) {
+                var reg = /[а-яА-ЯёЁ]/g;
+                if (this.value.search(reg) !=  -1) {
+                    this.value  =  this.value.replace(reg, '');
+                    alert('Enter only Latin characters!');
+                }
+            });
+
             this.modelBinder.bind(this.model, this.el);
+        },
+
+        "selectTab": function (e) {
+            e.preventDefault();
+            var obj = $(e.currentTarget);
+
+            this.langsSelected = obj.data('lang');
+            this.render();
         },
     });
 

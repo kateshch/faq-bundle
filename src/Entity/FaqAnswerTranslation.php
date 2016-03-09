@@ -22,6 +22,13 @@ class FaqAnswerTranslation
      */
     protected $message;
 
+
+    public function isEmpty()
+    {
+        return !$this->message;
+    }
+
+
     /**
      * @return string
      */
