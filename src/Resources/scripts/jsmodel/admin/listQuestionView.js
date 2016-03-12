@@ -62,6 +62,9 @@ define([
                     el:    this.$el.find('.edit-question-' + index)
                 });
             this.editQuestionView[index].render();
+            this.editQuestionView[index].on('newModel', function () {
+                this.model.fetch();
+            }, this);
 
         },
 

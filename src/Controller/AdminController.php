@@ -2,6 +2,10 @@
 namespace Kateshch\FaqBundle\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
+use JMS\Serializer\DeserializationContext;
+use JMS\Serializer\SerializerInterface;
+use Kateshch\FaqBundle\Entity\FaqAnswerTranslation;
+use Kateshch\FaqBundle\Entity\FaqQuestionTranslation;
 use Kateshch\FaqBundle\Entity\File;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use FOS\RestBundle\Controller\Annotations as Rest;
@@ -31,6 +35,12 @@ class AdminController extends Controller
      * @var EntityManagerInterface
      */
     private $manager;
+
+    /**
+     * @var SerializerInterface
+     * @DI\Inject("serializer")
+     */
+    private $serializer;
 
     /**
      * @DI\Inject("faq.repo.question")
@@ -227,12 +237,69 @@ class AdminController extends Controller
      *          }
      *      })
      * @Rest\View(serializerGroups={"Default", "edit"})
-     * @param FaqQuestion                      $question
+     * @param FaqQuestion $question
      * @return FaqQuestion
      * @internal param Request $request
      */
     public function editQuestionAction(FaqQuestion $question, Request $request)
     {
+        $res = json_decode($request->getContent());
+        /** @var array <FaqQuestionTranslation> $tr */
+        $tr = $question->getATranslations();
+        /** @var FaqQuestionTranslation $t */
+        foreach ($res->translations as $t_res) {
+            if(property_exists($t_res, 'message')){
+                $lang = $t_res->locale;
+                $neededObject = array_filter(
+                    $tr,
+                    function ($e) use (&$lang) {
+                        /** @var FaqQuestionTranslation $e */
+                        return $e->getLocale() == $lang;
+                    }
+                );
+                if (!$neededObject) {
+                    $t = new FaqQuestionTranslation();
+                    $t->setLocale($lang);
+                    $t->setMessage('');
+                    $t->setTranslatable($question);
+                    array_push($tr, $t);
+                }
+                foreach ($tr as $t) {
+                    if ($t->getLocale() == $lang) {
+                        $t->setMessage($t_res->message);
+                    }
+                }
+            }
+        }
+        $question->setATranslations($tr);
+        $answer = $question->getAnswer();
+        $tr = $answer->getATranslations();
+        foreach ($res->answer->translations as $t_res) {
+            if(property_exists($t_res, 'message')) {
+                $lang = $t_res->locale;
+                $neededObject = array_filter(
+                    $tr,
+                    function ($e) use (&$lang) {
+                        /** @var FaqQuestionTranslation $e */
+                        return $e->getLocale() == $lang;
+                    }
+                );
+                if (!$neededObject) {
+                    $t = new FaqAnswerTranslation();
+                    $t->setLocale($lang);
+                    $t->setMessage('');
+                    $t->setTranslatable($answer);
+                    array_push($tr, $t);
+                }
+                foreach ($tr as $t) {
+                    if ($t->getLocale() == $lang) {
+                        $t->setMessage($t_res->message);
+                    }
+                }
+            }
+        }
+        $answer->setATranslations($tr);
+        $question->setAnswer($answer);
         $this->manager->persist($question);
         $this->manager->flush();
         return $question;
@@ -253,8 +320,11 @@ class AdminController extends Controller
      *      })
      * @Rest\View(serializerGroups={"Default", "edit"})
      */
-    public function saveQuestionAction(FaqQuestion $faqQuestion, Request $request)
-    {
+    public
+    function saveQuestionAction(
+        FaqQuestion $faqQuestion,
+        Request $request
+    ) {
         $this->manager->persist($faqQuestion);
         $this->manager->flush();
         return $faqQuestion;
@@ -267,8 +337,11 @@ class AdminController extends Controller
      * @Rest\Put("/api/question/delete/{question}", name="faq_question_delete", defaults={"_format": "json"})
      * @Rest\View(serializerGroups={"Default", "edit"})
      */
-    public function deleteQuestionAction(FaqQuestion $question, Request $request)
-    {
+    public
+    function deleteQuestionAction(
+        FaqQuestion $question,
+        Request $request
+    ) {
         $this->manager->remove($question);
         $this->manager->flush();
         return $question;

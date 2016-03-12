@@ -70,7 +70,7 @@ class FaqQuestion
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      * @Serializer\Type("integer")
-     * @Serializer\Groups({"=read"})
+     * @Serializer\Groups({"=read or g('create') or g('edit')"})
      * @var integer
      */
     protected $id;
