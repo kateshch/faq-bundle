@@ -8,75 +8,76 @@ import 'backbone.modelbinder';
 
 @asyncView()
 export default class extends View {
-    indexAction(id) {
-        const defer = Q.defer();
+  indexAction(id) {
+    const defer = Q.defer();
 
-        this.model = CategoryModel.findOrCreate({id: id});
-        this.model.once('sync', () => {
-            this.langs = [];
-            _.each(window.$langs, (lang)=> {
-                this.langs[this.model.get('translations').findLocale(lang)] = lang;
-            });
-            defer.resolve();
+    this.model = CategoryModel.findOrCreate({id: id});
+    this.model.once('sync', () => {
+      this.langs = [];
+      _.each(window.$langs, (lang)=> {
+        this.langs[this.model.get('translations').findLocale(lang)] = lang;
+      });
+      defer.resolve();
+    });
+    this.model.fetch();
+
+    return defer.promise
+      .then(() => this.render());
+  }
+
+  newAction() {
+    const defer = Q.defer();
+    this.model = new CategoryModel();
+    this.langs = [];
+    _.each(window.$langs, (lang)=> {
+      this.langs[this.model.get('translations').findLocale(lang)] = lang;
+    });
+    defer.resolve();
+
+    return defer.promise
+      .then(() => this.render());
+  }
+
+  tearUp() {
+    this.modelBinder = new Backbone.ModelBinder();
+
+    return super.tearUp();
+  }
+
+  tearDown(...args) {
+    this.off('model:change');
+    return super.tearDown(...args);
+  }
+
+  render() {
+
+    this.$el.html(this.template({
+      model: this.model,
+      languages: this.langs
+    }));
+
+    this.modelBinder.bind(this.model, this.el);
+
+    return this;
+  }
+
+
+  @property
+  static template = template;
+
+  @property
+  static events = function () {
+    return {
+      "click .save-category": (event) => {
+        event.preventDefault();
+        this.model.save({}, {
+          success: (response)=> {
+            alert('Категория успешно сохранена!');
+            $('.ply-x').click();
+          }
         });
-        this.model.fetch();
 
-        return defer.promise
-            .then(() => this.render());
-    }
-
-    newAction() {
-        const defer = Q.defer();
-        this.model = new CategoryModel();
-        this.langs = [];
-        _.each(window.$langs, (lang)=> {
-            this.langs[this.model.get('translations').findLocale(lang)] = lang;
-        });
-        defer.resolve();
-
-        return defer.promise
-            .then(() => this.render());
-    }
-
-    tearUp() {
-        this.modelBinder = new Backbone.ModelBinder();
-
-        return super.tearUp();
-    }
-
-    tearDown(...args) {
-        this.off('model:change');
-        return super.tearDown(...args);
-    }
-
-    render() {
-
-        this.$el.html(this.template({
-            model: this.model,
-            languages: this.langs
-        }));
-
-        this.modelBinder.bind(this.model, this.el);
-
-        return this;
-    }
-
-
-    @property
-    static template = template;
-
-    @property
-    static events = function () {
-        return {
-            "click .save-category": (event) => {
-                event.preventDefault();
-                this.model.save({
-                    success: (response)=> {
-                        alert('Категория успешно сохранена!')
-                    }
-                });
-
-            }
-        };
+      }
     };
+  };
 }

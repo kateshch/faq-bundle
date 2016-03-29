@@ -1,31 +1,32 @@
-<div role="form">
-    <div class="col-sm-9">
-        {% for i,language in languages %}
-            {% set transPrefix = 'translations['~(i)~']' %}
-            <div class="col-sm-3">
-                <h3>{{ language }}</h3>
+<div class="panel blank-panel">
+    <div class="panel-body">
 
-                <div class="input-row">
-                    <label for="{{ id() }}" class="required">Название</label>
+        <div class="tab-content">
+            <form role="form" class="form-inline">
+                {% for i,language in languages %}
+                    {% set transPrefix = 'translations['~(i)~']' %}
+                    <div class="form-group">
+                        <h3>{{ language }}</h3>
 
-                    <div class="input-holder">
-                        <input type="text" id="{{ id() }}" name="{{ transPrefix }}.title">
+
+                        <label for="{{ id() }}" class="required">Название</label>
+
+                        <div class="input-holder">
+                        <textarea rows="5" id="{{ id() }}"
+                                  name="{{ transPrefix }}.title"></textarea>
+                        </div>
+
                     </div>
-                </div>
-            </div>
-        {% endfor %}
-    </div>
-    <div class="col-sm-9">
-        <div class="form-group"><label class="col-sm-2 control-label">Class</label>
+                {% endfor %}
 
-            <div class="col-sm-10">
-                <input name="class" placeholder="Type your message here">
-            </div>
+            </form>
         </div>
 
-
     </div>
-    <button class="btn btn-white cancel">Cancel</button>
-    <button type="submit" class="btn btn-primary save-category">Save</button>
+
 </div>
+
+
+<button class=" btn-white cancel">Cancel</button>
+<button type="submit" class="btn-primary save-category">Save</button>
 

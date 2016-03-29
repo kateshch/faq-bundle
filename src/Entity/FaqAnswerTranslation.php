@@ -38,5 +38,4 @@ class FaqAnswerTranslation
         return $this;
     }
 
-
 }

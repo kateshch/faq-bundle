@@ -1,41 +1,41 @@
-<div class="col-sm-15">
-    {% for language in languages %}
-        {% set questionTransPrefix = 'translations['~(model.translations.findLocale(language))~']' %}
-        {% set answerTransPrefix = 'translations['~(model.answer.translations.findLocale(language, true))~']' %}
-        <div class="col-sm-5">
-            <h3>{{ language }}</h3>
+<div class="panel blank-panel">
+    <div class="panel-body">
 
-            <div class="input-row">
-                <label for="{{ id() }}" class="required">Вопрос</label>
+        <div class="tab-content">
+            {% for i,language in languages %}
+                {% set questionTransPrefix = 'translations['~(model.translations.findLocale(language))~']' %}
+                {% set answerTransPrefix = 'translations['~(model.answer.translations.findLocale(language, true))~']' %}
+                <div id="tab-{{ i }}" class="tab-pane active">
+                    <h3>{{ language }}</h3>
 
-                <div class="input-holder">
-                        <textarea rows="5" cols="15" id="{{ id() }}"
+                    <form role="form" class="form-inline">
+                        <div class="form-group">
+                            <label for="{{ id() }}" class="required">Вопрос</label>
+
+                            <div class="input-holder">
+                        <textarea rows="5" id="{{ id() }}"
                                   name="{{ questionTransPrefix }}.message"></textarea>
-                </div>
-            </div>
+                            </div>
+                        </div>
 
-            <div class="input-row">
-                <label for="{{ id() }}" class="required">Ответ</label>
+                        <div class="form-group">
+                            <label for="{{ id() }}" class="required">Ответ</label>
 
-                <div class="input-holder">
-                        <textarea rows="5" cols="15" id="{{ id() }}"
+                            <div class="input-holder">
+                        <textarea rows="5" id="{{ id() }}"
                                   name="answer.{{ answerTransPrefix }}.message"></textarea>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-            </div>
+            {% endfor %}
         </div>
-    {% endfor %}
-    <div class="col-sm-5">
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <button class=" btn-white cancel">Cancel</button>
-        <button type="submit" class="btn-primary save-question">Save</button>
+
     </div>
-</div>
 
 </div>
 
 
+<button class=" btn-white cancel">Cancel</button>
+<button type="submit" class="btn-primary save-question">Save</button>
 
