@@ -58,7 +58,7 @@ class FaqCategory
     protected $id;
 
     /**
-     * @ORM\Column(type="string",length=100, unique=true, nullable=true)
+     * @ORM\Column(type="string",length=100, unique=true)
      * @var string
      */
     protected $class;

@@ -20,6 +20,18 @@
                 {% endfor %}
 
             </form>
+            <div class="form-group">
+                <h3>{{ language }}</h3>
+
+
+                <label for="{{ id() }}" class="required">Ссылка на категорию</label>
+
+                <div class="input-holder">
+                        <textarea rows="5" id="{{ id() }}"
+                                  name="class"></textarea>
+                </div>
+
+            </div>
         </div>
 
     </div>
