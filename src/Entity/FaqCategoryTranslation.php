@@ -2,7 +2,6 @@
 namespace Kateshch\FaqBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Werkint\Bundle\FrameworkExtraBundle\Model\Translation;
 
 /**
  * TODO: write "FaqCategoryTranslation" info
@@ -15,7 +14,7 @@ use Werkint\Bundle\FrameworkExtraBundle\Model\Translation;
  */
 class FaqCategoryTranslation
 {
-    use Translation;
+    use Translation\TranslationTrait;
 
     // -- Entity ---------------------------------------
 

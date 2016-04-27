@@ -3,7 +3,6 @@ namespace Kateshch\FaqBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use Werkint\Bundle\FrameworkExtraBundle\Model\Translation;
 
 /**
  *
@@ -14,7 +13,7 @@ use Werkint\Bundle\FrameworkExtraBundle\Model\Translation;
  */
 class FaqQuestionTranslation
 {
-    use Translation;
+    use Translation\TranslationTrait;
 
     /**
      * @var string

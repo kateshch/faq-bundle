@@ -114,6 +114,7 @@ class AdminController
      */
     public function saveCategoryAction(FaqCategory $faqCategory, Request $request)
     {
+        $faqCategory->mergeNewTranslations();
         $this->manager->persist($faqCategory);
         $this->manager->flush();
         return $faqCategory;

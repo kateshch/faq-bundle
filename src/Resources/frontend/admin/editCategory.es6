@@ -71,7 +71,7 @@ export default class extends View {
       "click .save-category": (event) => {
         event.preventDefault();
         this.model.save({}, {
-          success: (response)=> {
+          success: function(response){
             alert('Категория успешно сохранена!');
             $('.ply-x').click();
           }

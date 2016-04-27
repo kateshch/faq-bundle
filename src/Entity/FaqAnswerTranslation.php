@@ -3,7 +3,6 @@ namespace Kateshch\FaqBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Model as ORMBehaviors;
-use Werkint\Bundle\FrameworkExtraBundle\Model\Translation;
 
 /**
  *
@@ -12,7 +11,7 @@ use Werkint\Bundle\FrameworkExtraBundle\Model\Translation;
  */
 class FaqAnswerTranslation
 {
-    use Translation;
+    use Translation\TranslationTrait;
 
     /**
      * @var string
