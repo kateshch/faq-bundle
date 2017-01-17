@@ -46,6 +46,7 @@ class KateshchFaqBundleExtension extends AbstractExtension
         $this->locales = $locales;
         $this->vars = $vars['params'];
         parent::__construct();
+        $this->init();
     }
 
 
